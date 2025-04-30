@@ -1,0 +1,14 @@
+.mainContainer{
+    background-color: #7F7B82;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.infoContainer{
+    display: flex;
+    flex-direction: row;
+}
+.buttonsContainer{
+    display: flex;
+    flex-direction: row;
+}

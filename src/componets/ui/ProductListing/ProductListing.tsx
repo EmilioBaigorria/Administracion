@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import styles from "./ProductListing.module.css"
 import { enumCategoria, IProduct } from "../../../types/IProduct"
 import { Button } from "../Button/Button"
+import { ProductBarCard } from "../ProductBarCard/ProductBarCard"
 
 export const ProductListing = () => {
     const exampleProduct: IProduct = {
@@ -35,7 +36,7 @@ export const ProductListing = () => {
             </div>
             <div className={styles.productsContainer}>
                 {products.map((el)=>(
-                    <p>{el.nombre}</p>
+                    <ProductBarCard product={el}/>
                 ))}
             </div>
         </div>

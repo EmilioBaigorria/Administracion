@@ -1,17 +1,17 @@
 import { Header } from "../../ui/Header/Header"
-import styles from "./Categories.modules.css"
+import { Sidebar } from "../../ui/Sidebar/Sidebar"
+import styles from "./Categories.module.css"
 
 export const Categories = () => {
   return (
-    <div>
-      <div>
-      <div>
-        <Header/>
+    <div className={styles.mainContainer}>
+      <div className={styles.headerContainer}>
+        <Header />
       </div>
-      <div>
+      <div className={styles.contentContainer}>
+        <Sidebar />
         <p>Categorias</p>
       </div>
-    </div>
     </div>
   )
 }
