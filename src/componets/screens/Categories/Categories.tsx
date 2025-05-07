@@ -1,3 +1,4 @@
+import { CategorieListing } from "../../ui/CategorieListing/CategorieListing"
 import { Header } from "../../ui/Header/Header"
 import { Sidebar } from "../../ui/Sidebar/Sidebar"
 import styles from "./Categories.module.css"
@@ -10,7 +11,7 @@ export const Categories = () => {
       </div>
       <div className={styles.contentContainer}>
         <Sidebar />
-        <p>Categorias</p>
+        <CategorieListing/>
       </div>
     </div>
   )
