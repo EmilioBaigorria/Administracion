@@ -1,4 +1,4 @@
-import { ModalCrearEditarProducto } from "../../modals/ModalCrearEditarProducto"
+import { ModalCrearEditarProducto } from "../../modals/ModalCrearEditarProducto/ModalCrearEditarProducto"
 import { Header } from "../../ui/Header/Header"
 import { ProductListing } from "../../ui/ProductListing/ProductListing"
 import { Sidebar } from "../../ui/Sidebar/Sidebar"
