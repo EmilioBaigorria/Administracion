@@ -1,17 +1,19 @@
-import { useEffect, useState } from "react"
+import { FC, useEffect, useState } from "react"
 import styles from "./ProductListing.module.css"
-import { enumCategoria, IProduct } from "../../../types/IProduct"
+import { IProduct } from "../../../types/IProduct"
 import { Button } from "../Button/Button"
 import { ProductBarCard } from "../ProductBarCard/ProductBarCard"
-
-export const ProductListing = () => {
+interface IProductListing {
+    setProductModal: Function
+}
+export const ProductListing: FC<IProductListing> = ({ setProductModal }) => {
     const exampleProduct: IProduct = {
         id: Date.toString(),
         nombre: "ExampleName",
         stock: 2,
         precio: 150000,
         descripcion: "ExampleDesc",
-        categoria: enumCategoria.DEPORTIVAS,
+        categoria: [],
         talle: "38",
         color: ["red", "blue", "yellow"],
         marca: "Adidas",
@@ -31,12 +33,12 @@ export const ProductListing = () => {
                     <p>Productos</p>
                 </div>
                 <div>
-                    <Button text="Agregar producto" action={() => { }} styleSet={false} />
+                    <Button text="Agregar producto" action={() => setProductModal(true)} styleSet={false} />
                 </div>
             </div>
             <div className={styles.productsContainer}>
-                {products.map((el)=>(
-                    <ProductBarCard product={el}/>
+                {products.map((el, key) => (
+                    <ProductBarCard key={key} product={el} />
                 ))}
             </div>
         </div>

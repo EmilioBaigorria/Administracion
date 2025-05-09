@@ -1,13 +1,17 @@
-import React, { useState } from 'react'
+import React, { FC, useState } from 'react'
 import styles from "./CategorieListing.module.css"
 import { Button } from '../Button/Button'
-import { Categories } from '../../../types/enums/Categories'
+import { ICategories } from '../../../types/ICategories'
+import { CategorieBarCard } from '../CategorieBarCard/CategorieBarCard'
 
-const initialValues:Categories[]=[0,1,2,3,4,5]
 
-export const CategorieListing = () => {
+const initialValues:ICategories[]=[{nombre:"Urbano",id:"11"},{nombre:"Hombre",id:"12"}]
+interface ICategorieListing{
+    setCategorieModal:Function
+}
+export const CategorieListing:FC<ICategorieListing> = ({setCategorieModal}) => {
     
-    const [categories,setCategories]=useState<Categories[]>(initialValues)
+    const [categories,setCategories]=useState<ICategories[]>(initialValues)
 
   return (
     <div className={styles.mainContainer}>
@@ -16,12 +20,12 @@ export const CategorieListing = () => {
                     <p>Productos</p>
                 </div>
                 <div>
-                    <Button text="Agregar Categoria" action={() => { }} styleSet={false} />
+                    <Button text="Agregar Categoria" action={()=>setCategorieModal(true)} styleSet={false} />
                 </div>
             </div>
-            <div className={styles.productsContainer}>
+            <div className={styles.categoriesContainer}>
                 {categories.map((el)=>(
-                    <p>{Categories[el]}</p>
+                    <CategorieBarCard key={el.id} categorie={el}/>
                 ))}
             </div>
         </div>

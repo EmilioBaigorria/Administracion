@@ -1,34 +1,28 @@
-import React, { FC } from 'react'
-import { IProduct } from '../../../types/IProduct'
-import { Button } from '../Button/Button'
-import styles from "./ProductBarCard.module.css"
-interface ProductBarCard {
-    product: IProduct
+import { FC } from "react"
+import { ICategories } from "../../../types/ICategories"
+import { Button } from "../Button/Button"
+import styles from "./CategorieBarCard.module.css"
+interface ICategorieBarCard {
+    categorie: ICategories
 }
-export const ProductBarCard: FC<ProductBarCard> = ({ product }) => {
+export const CategorieBarCard: FC<ICategorieBarCard> = ({ categorie }) => {
+
     return (
         <div className={styles.mainContainer}>
             <div className={styles.infoContainer}>
-
-                <p>Nombre:{product.nombre}</p>
-                <p>Categorias:{}</p>
-                <p>Stock:{product.stock}</p>
-                <p>Precio de venta:{product.precio}</p>
-
+                <p>Nombre:{categorie.nombre}</p>
             </div>
             <div className={styles.buttonsContainer}>
-
                 <Button icon={
                     <span className="material-symbols-outlined">
-                    edit
+                        edit
                     </span>
                 } action={() => { }} />
                 <Button icon={
                     <span className="material-symbols-outlined">
-                    delete
+                        delete
                     </span>
                 } action={() => { }} />
-
             </div>
         </div>
     )

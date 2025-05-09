@@ -1,15 +1,16 @@
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, FC, useState } from "react"
 import styles from "./ModalCrearEditarProducto.tsx.module.css"
 import { IProduct } from "../../../types/IProduct"
 import Select, { StylesConfig } from "react-select"
 import { MultiValue } from "react-select"
+import { Button } from "../../ui/Button/Button"
 const initialValues: IProduct = {
     id: "",
     nombre: "",
     stock: 0,
     precio: 0,
     descripcion: "",
-    categoria: 0,
+    categoria: [],
     talle: "",
     color: [],
     marca: "",
@@ -38,14 +39,14 @@ const customStyles: StylesConfig<OptionType, true> = {
         ...base,
         minHeight: '28px',
         height: '40px',
-        minWidth:'18rem',
+        minWidth: '18rem',
         width: '100%',
         backgroundColor: 'white',
         borderColor: state.isFocused ? 'blue' : 'gray',
         boxShadow: state.isFocused ? '0 0 0 1px blue' : undefined,
         fontSize: '0.9rem',
         padding: '0 4px',
-        alignItems:'center',
+        alignItems: 'center',
         '&:hover': {
             borderColor: 'blue',
         },
@@ -103,24 +104,30 @@ const customStyles: StylesConfig<OptionType, true> = {
         zIndex: 9999,
     }),
 };
-
-export const ModalCrearEditarProducto = () => {
+interface IModalCrearEditarProducto {
+    isOpen: boolean,
+    onClose: Function
+}
+export const ModalCrearEditarProducto: FC<IModalCrearEditarProducto> = ({ isOpen, onClose }) => {
     const [workingProduct, setWorkingProduct] = useState<IProduct>(initialValues)
     const [selectedCategories, setSelectedCategories] = useState<MultiValue<OptionType>>([])
     const [selectedSizes, setSelectedSizes] = useState<MultiValue<OptionType>>([])
-
-
 
     const handleChangeInputs = (event: ChangeEvent<HTMLInputElement>) => {
         const { value, name } = event.target
         setWorkingProduct((prev) => ({ ...prev, [`${name}`]: value }))
         console.log(workingProduct)
     }
+    const handleClose=()=>{
+        setWorkingProduct(initialValues)
+        onClose()
+    }
     return (
-        <div className={styles.background} style={{}}>
+        <div className={styles.background} style={{ display: isOpen ? "" : "none" }}>
             <div className={styles.mainContainer}>
                 <div className={styles.header}>
                     <p>{workingProduct.nombre == "" ? "Añadir producto" : "Editar producto"}</p>
+                    <div className={styles.header_X} onClick={handleClose}>✖</div>
                 </div>
                 <div className={styles.mainContentContainer}>
                     <div className={styles.inputsContainer}>
@@ -165,14 +172,17 @@ export const ModalCrearEditarProducto = () => {
                             <input className={styles.inputsContainer_inputContainer_input} type="text"
                                 name="stock" value={workingProduct.stock} onChange={handleChangeInputs} />
                         </div>
+                        <div className={styles.inputsContainer_inputContainer}>
+                            <p className={styles.inputsContainer_inputContainer_label}>Imagen:</p>
 
-
+                        </div>
                     </div>
                     <div className={styles.colorInputsContainer}>
-                        <p>colors</p>
+                        colors
                     </div>
                     <div className={styles.bottomButtonsContaner}>
-                        <p>crear</p>
+                        <Button text="Cancelar" action={() => { }} styleSet={false} />
+                        <Button text="Crear" action={() => { }} styleSet={false} />
                     </div>
                 </div>
             </div>

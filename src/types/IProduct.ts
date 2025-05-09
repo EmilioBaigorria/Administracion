@@ -1,7 +1,5 @@
-export enum enumCategoria{
-    URBANAS,
-    DEPORTIVAS
-}
+import { ICategories } from "./ICategories";
+
 
 export interface IProduct{
     id:string,
@@ -9,7 +7,7 @@ export interface IProduct{
     stock:number,
     precio:number,
     descripcion:string,
-    categoria:enumCategoria,
+    categoria:ICategories[],
     talle:string,
     color:string[],
     marca:string,
