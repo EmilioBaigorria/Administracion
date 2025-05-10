@@ -7,7 +7,7 @@ export const Header = () => {
             <img className={styles.img} src="../../../assets/vetra_logo.svg"/>
         </div>
         <div>
-            <p>User</p>
+            <p></p>
         </div>
     </div>
   )
