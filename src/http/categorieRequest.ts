@@ -37,9 +37,9 @@ export const createCategorie=async(categorie:ICategories)=>{
         console.log("Ocurrio un error durante la creacion de una categoria: ",error)
     }
 }
-export const updateCategorieById=async(id:string,categorie:ICategories)=>{
+export const updateCategorie=async(updatedCategorie:ICategories)=>{
     try {
-        const response=await axios.put(`${APIURL}/categorias/${id}`,categorie)
+        const response=await axios.put(`${APIURL}/categorias/${updatedCategorie.id}`,updatedCategorie)
         if(response){
             return response.data
         }
