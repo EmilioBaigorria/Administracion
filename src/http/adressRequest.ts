@@ -45,7 +45,7 @@ export const updateAdress=async(updatedAdress:IAdress)=>{
         }
         return null
     } catch (error) {
-        console.log("Ocurrio un error durante la creacion de una direccion: ",error)
+        console.log("Ocurrio un error durante la actualizacion de una direccion: ",error)
     }
 }
 export const deleteAdressById=async(id:string)=>{
@@ -56,6 +56,6 @@ export const deleteAdressById=async(id:string)=>{
         }
         return null
     } catch (error) {
-        console.log("Ocurrio un error durante la creacion de una direccion: ",error)
+        console.log("Ocurrio un error durante la eliminacion de una direccion: ",error)
     }
 }

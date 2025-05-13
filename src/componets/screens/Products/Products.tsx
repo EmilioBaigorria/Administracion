@@ -8,13 +8,8 @@ import styles from "./Products.module.css"
 
 export const Products = () => {
   const [productModal, setProductModal] = useState(false)
-  const test= async()=>{
-    const response=null
-    console.log(response)
-  }
   return (
     <div className={styles.mainContainer}>
-      <button onClick={test}>test</button>
       <ModalCrearEditarProducto isOpen={productModal} onClose={() => setProductModal(false)} />
       <div className={styles.headerContainer}>
         <Header />
