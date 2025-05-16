@@ -17,6 +17,9 @@ export const AppRouter = () => {
             <Route path='/categories' element={
               <Categories/>
             }/>
+             <Route path='*' element={
+              <div>Error 404 not found</div>
+            }/>
         </Routes>
     </BrowserRouter>
   )

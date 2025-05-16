@@ -25,9 +25,10 @@
     height: 70%;
 }
 .logInComponent_header{
+    padding-left: 1rem;
     background-color: #000411;
     color: white;
-    width: 100%;
+    width: auto;
     height: 15%;
     display: flex;
     align-items: center;
