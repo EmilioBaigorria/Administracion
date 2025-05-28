@@ -22,10 +22,9 @@ export const Login = () => {
   }
   const navigate = useNavigate()
   const handleLogin = async () => {
-    console.log(logInInfo)
     const token = await authRequest(logInInfo)
     if (token) {
-      console.log("token: ", token)
+      console.log(token)
       localStorage.setItem('token', token)
       navigate("/products")
       return
