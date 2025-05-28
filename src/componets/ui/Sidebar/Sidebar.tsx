@@ -7,7 +7,7 @@ export const Sidebar = () => {
   return (
     <div className={styles.mainContainer}>   
         <div className={styles.buttonsContainer}>
-            <Button text="Productos" action={()=>{navigate("/")}}/>
+            <Button text="Productos" action={()=>{navigate("/products")}}/>
             <Button text="Categorias" action={()=>{navigate("/categories")}}/>
         </div>
     </div>
