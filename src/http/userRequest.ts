@@ -1,12 +1,13 @@
 import axios from "axios"
 import { IUser } from "../types/IUser"
+import { getLocalToken } from "../services/tokenService"
 
 const APIURL=import.meta.env.VITE_APIURL
 const baseURL=`${APIURL}/usuarios`
 
 export const getAllUsers=async()=>{
     try {
-        const response=await axios.get(`${baseURL}`)
+        const response=await axios.get(`${baseURL}`,{headers:{"Authorization":getLocalToken()}})
         if(response){
             return response.data
         }
@@ -17,7 +18,7 @@ export const getAllUsers=async()=>{
 }
 export const getUserById=async(id:string)=>{
     try {
-        const response=await axios.get(`${baseURL}/${id}`)
+        const response=await axios.get(`${baseURL}/${id}`,{headers:{"Authorization":getLocalToken()}})
         if(response){
             return response.data
         }
@@ -28,7 +29,7 @@ export const getUserById=async(id:string)=>{
 }
 export const createUser=async(newUser:IUser)=>{
     try {
-        const response=await axios.post(`${baseURL}`,newUser)
+        const response=await axios.post(`${baseURL}`,newUser,{headers:{"Authorization":getLocalToken()}})
         if(response){
             return response.data
         }
@@ -40,7 +41,7 @@ export const createUser=async(newUser:IUser)=>{
 
 export const updateUser=async(updatedUser:IUser)=>{
     try {
-        const response=await axios.put(`${baseURL}/${updatedUser.id}`,updatedUser)
+        const response=await axios.put(`${baseURL}/${updatedUser.id}`,updatedUser,{headers:{"Authorization":getLocalToken()}})
         if(response){
             return response.data
         }
@@ -51,7 +52,7 @@ export const updateUser=async(updatedUser:IUser)=>{
 }
 export const deleteUser=async(id:string)=>{
     try {
-        const response=await axios.delete(`${baseURL}/${id}`)
+        const response=await axios.delete(`${baseURL}/${id}`,{headers:{"Authorization":getLocalToken()}})
         if(response){
             return {message:"El usuario fue eliminado correctamente"}
         }

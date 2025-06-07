@@ -1,12 +1,13 @@
 import axios from "axios"
 import { ISize } from "../types/ISize"
+import { getLocalToken } from "../services/tokenService"
 
 const APIURL=import.meta.env.VITE_APIURL
 const baseURL=`${APIURL}/talles`
 
 export const getAllSizes=async()=>{
     try {
-        const response=await axios.get(`${baseURL}`)
+        const response=await axios.get(`${baseURL}`,{headers:{"Authorization":getLocalToken()}})
         if(response){
             return response.data
         }
@@ -17,7 +18,7 @@ export const getAllSizes=async()=>{
 }
 export const getSizeById=async(id:string)=>{
     try {
-        const response=await axios.get(`${baseURL}/${id}`)
+        const response=await axios.get(`${baseURL}/${id}`,{headers:{"Authorization":getLocalToken()}})
         if(response){
             return response.data
         }
@@ -28,7 +29,7 @@ export const getSizeById=async(id:string)=>{
 }
 export const createSize=async(size:ISize)=>{
     try {
-        const response=await axios.post(`${baseURL}`,size)
+        const response=await axios.post(`${baseURL}`,size,{headers:{"Authorization":getLocalToken()}})
         if(response){
             return response.data
         }
@@ -39,7 +40,7 @@ export const createSize=async(size:ISize)=>{
 }
 export const updateSize=async(updatedSize:ISize)=>{
     try {
-        const response=await axios.put(`${baseURL}/${updatedSize.id}`,updatedSize)
+        const response=await axios.put(`${baseURL}/${updatedSize.id}`,updatedSize,{headers:{"Authorization":getLocalToken()}})
         if(response){
             return response.data
         }
@@ -50,7 +51,7 @@ export const updateSize=async(updatedSize:ISize)=>{
 }
 export const deleteSizeById=async(id:string)=>{
     try {
-        const response=await axios.delete(`${baseURL}/${id}`)
+        const response=await axios.delete(`${baseURL}/${id}`,{headers:{"Authorization":getLocalToken()}})
         if(response){
             return {message:"El talle fue eliminado correctamente"}
         }
