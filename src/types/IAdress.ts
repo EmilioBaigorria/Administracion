@@ -1,7 +1,7 @@
 
 
 export interface IAdress{
-    id?:string,
+    id?:number,
     calle:string,
     codpost:number,
 }
