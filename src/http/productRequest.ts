@@ -31,14 +31,22 @@ export const getProductById=async(id:string)=>{
 }
 export const createProduct=async(newProduct:IProduct)=>{
     try {
-        const response=await axios.post(`${baseURL}`,newProduct,{headers:{"Authorization":getLocalToken()}})
+        console.log(`Bearer ${getLocalToken()}`)
+        const response=await axios.post(`${baseURL}`,newProduct,{headers:{"Authorization":`Bearer ${getLocalToken()}`}})
         if(response){
             return response.data
         }
         return null
-    } catch (error) {
-        console.log("Ocurrio un error durante la creacion de un producto: ",error)
-    }
+    } catch (error: any) {
+  if (error.response) {
+    console.error("Respuesta con error del servidor:", error.response);
+  } else if (error.request) {
+    console.error("La solicitud fue hecha pero no hubo respuesta:", error.request);
+  } else {
+    console.error("Error al configurar la solicitud:", error.message);
+  }
+}
+
 }
 export const updateProduct=async(updatedProduct:IProduct)=>{
     try {

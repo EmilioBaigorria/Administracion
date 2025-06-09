@@ -29,7 +29,7 @@ export const getCategoriesById=async(id:string)=>{
 }
 export const createCategorie=async(categorie:ICategories)=>{
     try {
-        const response=await axios.post(`${APIURL}/categorias`,categorie,{headers:{"Authorization":getLocalToken()}})
+        const response=await axios.post(`${APIURL}/categorias`,categorie,{headers:{"Authorization":`Bearer ${getLocalToken()}`}})
         if(response){
             return response.data
         }

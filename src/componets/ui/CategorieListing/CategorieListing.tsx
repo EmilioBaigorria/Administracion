@@ -1,17 +1,25 @@
-import React, { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import styles from "./CategorieListing.module.css"
 import { Button } from '../Button/Button'
 import { ICategories } from '../../../types/ICategories'
 import { CategorieBarCard } from '../CategorieBarCard/CategorieBarCard'
+import { getAllCategories } from '../../../http/categorieRequest'
 
 
-const initialValues:ICategories[]=[{nombre:"Urbano",id:"11"},{nombre:"Hombre",id:"12"}]
+const initialValues:ICategories[]=[{nombre:"Urbano",id:11},{nombre:"Hombre",id:12}]
 interface ICategorieListing{
     setCategorieModal:Function
 }
 export const CategorieListing:FC<ICategorieListing> = ({setCategorieModal}) => {
     
     const [categories,setCategories]=useState<ICategories[]>(initialValues)
+    const getCategories=async()=>{
+        const allCategories=await getAllCategories()
+        setCategories(allCategories)
+    }
+    useEffect(()=>{
+        getCategories()
+    },[])
 
   return (
     <div className={styles.mainContainer}>

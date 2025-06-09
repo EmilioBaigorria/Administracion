@@ -5,7 +5,7 @@ import { Button } from "../Button/Button"
 import { ProductBarCard } from "../ProductBarCard/ProductBarCard"
 import { getAllProducts } from "../../../http/productRequest"
 interface IProductListing {
-    setProductModal: Function
+    setProductModal: Function,
 }
 export const ProductListing: FC<IProductListing> = ({ setProductModal }) => {
     const [products, setProducts] = useState<IProduct[]>([])
