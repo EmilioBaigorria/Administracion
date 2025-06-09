@@ -3,7 +3,7 @@ import styles from "./uploadImage.module.css"
 import{ useState, type ChangeEvent } from 'react';
 
 
-const UploadComponent= () => {
+const UploadImage= () => {
   const [imageUrl, setImageUrl] = useState<string|null>("https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=");
 
   const handleFileChange = async (image: ChangeEvent<HTMLInputElement>) => {
@@ -20,11 +20,11 @@ const UploadComponent= () => {
       {imageUrl && (
         <div>
           <p>Preview:</p>
-          <img src={imageUrl} alt="Subida a Cloudinary" width="120" />
+          <img src={imageUrl} alt="" width="100" />
         </div>
       )}
     </div>
   );
 };
 
-export default UploadComponent;
+export default UploadImage;

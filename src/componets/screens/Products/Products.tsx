@@ -13,6 +13,7 @@ export const Products = () => {
       <ModalCrearEditarProducto isOpen={productModal} onClose={() => setProductModal(false)} />
       <div className={styles.headerContainer}>
         <Header />
+        
       </div>
       <div className={styles.contentContainer}>
         <Sidebar />

@@ -1,6 +1,7 @@
+import { IAdress } from "./IAdress"
 
 
-export enum Role {
+export enum ROLE {
   ADMIN,
   USUARIO,
 }
@@ -8,7 +9,9 @@ export enum Role {
 export interface IUser {
   id?: number
   nombre: string
+  apellido:string 
   email: string
-  contraseña: string
-  rol: string
+  password: string
+  rol: ROLE | string
+  direcciones:IAdress[]
 }

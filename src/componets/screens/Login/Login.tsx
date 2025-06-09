@@ -6,6 +6,9 @@ import { useNavigate } from "react-router"
 import { ILoginBody } from "../../../types/ILoginBody"
 import { authRequest } from "../../../http/auth/authRequest"
 import { tokenIsExpired } from "../../../services/jwtService"
+import { IUser, ROLE } from "../../../types/IUser"
+import { useUserStore } from "../../../store/userStore"
+import { getAllUsers } from "../../../http/userRequest"
 
 
 const initialValues = {
@@ -16,6 +19,9 @@ export const Login = () => {
   const [logInInfo, setLogInInfo] = useState<ILoginBody>(initialValues)
   const [errorMessage, setErrorMessage] = useState<string>("")
 
+  const setActiveUser = useUserStore((state) => state.setActiveUser)
+  const deleteUser = useUserStore((state) => state.deleteUser)
+
   const handleChangeInputs = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target
     setLogInInfo((prev) => ({ ...prev, [`${name}`]: value }))
@@ -24,23 +30,41 @@ export const Login = () => {
   const handleLogin = async () => {
     const token = await authRequest(logInInfo)
     if (token) {
-      console.log(token)
       localStorage.setItem('token', token)
-      navigate("/products")
-      return
+      const userRole = await setLoggedUser(logInInfo.email)
+      console.log(userRole)
+      if (userRole == "ADMIN") {
+        navigate("/products")
+      } else {
+        localStorage.clear()
+        deleteUser()
+        setErrorMessage("No estas autorizado")
+      }
     }
     setErrorMessage("Contraseña o Email invalidos")
   }
 
+  const setLoggedUser = async (email: string): Promise<string|ROLE> => {
+    const users: IUser[] = await getAllUsers();
+    const user = users.find(user => user.email === email);
 
-  useEffect(()=>{
-    const token=localStorage.getItem('token')
-    if(token && !tokenIsExpired(token)){
+    if (user) {
+      setActiveUser(user);
+      return user.rol;
+    }
+
+    return "NOT WORKING";
+  };
+
+  useEffect(() => {
+    localStorage.clear()
+    const token = localStorage.getItem('token')
+    if (token && !tokenIsExpired(token)) {
       navigate("/products")
-    }else{
+    } else {
       localStorage.clear()
     }
-  },[])
+  }, [])
 
 
 

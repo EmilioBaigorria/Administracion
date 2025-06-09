@@ -7,7 +7,7 @@ const APIURL=import.meta.env.VITE_APIURL
 
 export const getAllCategories=async()=>{
     try {
-        const response=await axios.get(`${APIURL}/categorias`,{headers:{"Authorization":getLocalToken()}})
+        const response=await axios.get(`${APIURL}/categorias`)
         if(response){
             return response.data
         }
@@ -18,7 +18,7 @@ export const getAllCategories=async()=>{
 }
 export const getCategoriesById=async(id:string)=>{
     try {
-        const response=await axios.get(`${APIURL}/categorias/${id}`,{headers:{"Authorization":getLocalToken()}})
+        const response=await axios.get(`${APIURL}/categorias/${id}`)
         if(response){
             return response.data
         }

@@ -1,37 +1,45 @@
-import { ChangeEvent, FC, useState } from "react"
+import { ChangeEvent, FC, useEffect, useState } from "react"
 import styles from "./ModalCrearEditarProducto.tsx.module.css"
 import { IProduct } from "../../../types/IProduct"
 import Select, { StylesConfig } from "react-select"
 import { MultiValue } from "react-select"
 import { Button } from "../../ui/Button/Button"
+import { uploadImageToCloudinary } from "../../../http/imageRequest"
+import { getAllCategories, getCategoriesById } from "../../../http/categorieRequest"
+import { ICategories } from "../../../types/ICategories"
+import { ISize } from "../../../types/ISize"
+import { getAllSizes, getSizeById } from "../../../http/sizeRequest"
+import { IDiscount } from "../../../types/IDiscount"
+import { getAllDiscounts, getDiscountById } from "../../../http/discountRequest"
+import { createProduct } from "../../../http/productRequest"
 const initialValues: IProduct = {
-    id: "",
+    id: 0,
     nombre: "",
     stock: 0,
     precio: 0,
     descripcion: "",
-    categoria: [],
-    talle: "",
-    color: [],
+    categorias: [],
+    color: "",
     marca: "",
-    id_talle_producto: "",
-    id_descuento_producto: ""
+    imagen: "",
+    descuento: {
+        fechaInicio: new Date('2025-02-08'),
+        fechaCierre: new Date('2025-07-08'),
+        descuento: 30,
+        productos: []
+    },
+    talles: []
 }
+const initialURL = "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM="
 type OptionType = {
     value: string;
     label: string;
 }
-const mockedCategories: OptionType[] = [
-    { value: "Urbano", label: "Urbano" },
-    { value: "Rural", label: "Rural" },
-    { value: "Mujer", label: "Mujer" },
-    { value: "Hombre", label: "Hombre" }
-]
-const mockedSize: OptionType[] = [
-    { value: "37", label: "37" },
-    { value: "46", label: "37" },
-    { value: "XL", label: "XL" },
-    { value: "XXL", label: "XXL" }
+const colors: OptionType[] = [
+    { value: "Azul", label: "Azul" },
+    { value: "Rojo", label: "Rojo" },
+    { value: "Violeta", label: "Violeta" },
+    { value: "Amarillo", label: "Amarillo" }
 ]
 //Estos estilos fueron proporcionados por chat gpt y modificados ligeramente por mi
 const customStyles: StylesConfig<OptionType, true> = {
@@ -109,19 +117,111 @@ interface IModalCrearEditarProducto {
     onClose: Function
 }
 export const ModalCrearEditarProducto: FC<IModalCrearEditarProducto> = ({ isOpen, onClose }) => {
+
     const [workingProduct, setWorkingProduct] = useState<IProduct>(initialValues)
+
+    const [imageUrl, setImageUrl] = useState<string | null>(initialURL);
+
     const [selectedCategories, setSelectedCategories] = useState<MultiValue<OptionType>>([])
+    const [categorieOptions, setCategorieOptions] = useState<OptionType[]>()
+
     const [selectedSizes, setSelectedSizes] = useState<MultiValue<OptionType>>([])
+    const [sizesOptions, setsizesOptions] = useState<OptionType[]>()
+
+    const [selectedColors, setselectedColors] = useState<OptionType>()
+
+    const [selectedDiscount, setSelectedDiscount] = useState<OptionType>()
+    const [discountOptions, setDiscountOptions] = useState<OptionType[]>()
+
+    const handleFileChange = async (image: ChangeEvent<HTMLInputElement>) => {
+        const file = image.target.files?.[0];
+        if (file) {
+            const url = await uploadImageToCloudinary(file);
+            setImageUrl(url);
+        }
+    }
 
     const handleChangeInputs = (event: ChangeEvent<HTMLInputElement>) => {
         const { value, name } = event.target
         setWorkingProduct((prev) => ({ ...prev, [`${name}`]: value }))
-        console.log(workingProduct)
     }
-    const handleClose=()=>{
+
+    const getCategories = async () => {
+        const categories: ICategories[] = await getAllCategories()
+        const cateOptions: OptionType[] = categories.map((el) => ({
+            value: el.id ? el.id.toString() : "0",
+            label: el.nombre
+        }))
+        setCategorieOptions(cateOptions)
+    }
+
+    const getSizes = async () => {
+        const sizes: ISize[] = await getAllSizes()
+        const sizesOptions: OptionType[] = sizes.map((el) => ({
+            value: el.id ? el.id.toString() : "0",
+            label: el.talle
+        }))
+        setsizesOptions(sizesOptions)
+    }
+
+    const getDiscounts = async () => {
+        const discounts: IDiscount[] = await getAllDiscounts()
+        const discountOptions: OptionType[] = discounts.map((el) => ({
+            value: el.id ? el.id.toString() : "0",
+            label: `${el.descuento}%-${new Date(el.fechaInicio.toString()).toLocaleDateString()}-${new Date(el.fechaCierre.toString()).toLocaleDateString()}`
+        }))
+        setDiscountOptions(discountOptions)
+    }
+
+    const handleSave = async () => {
+
+        const productCategories = await Promise.all(
+            selectedCategories.map(async (el) => {
+                return await getCategoriesById(el.value);
+            })
+        );
+
+        const productSizes = await Promise.all(
+            selectedSizes.map(async (el) => {
+                return await getSizeById(el.value);
+            })
+        );
+        
+        const productDiscount=selectedDiscount?.value ? await getDiscountById(selectedDiscount.value): null
+        
+
+
+        const newProduct: IProduct = {
+            nombre: workingProduct.nombre,
+            descripcion: workingProduct.descripcion,
+            precio: Number(workingProduct.precio),
+            stock: Number(workingProduct.stock),
+            categorias: productCategories,
+            color: selectedColors?.value ? selectedColors?.value:"none",
+            marca:workingProduct.marca ,
+            imagen: imageUrl?imageUrl:"https://developer.valvesoftware.com/w/images/8/8b/Debugempty.png",
+            descuento:productDiscount,
+            talles: productSizes,
+        }
+        console.log(newProduct)
+        const response=await createProduct(newProduct)
+        console.log(response)
+    }
+
+    const handleClose = () => {
         setWorkingProduct(initialValues)
+        setImageUrl(initialURL)
         onClose()
     }
+
+    useEffect(() => {
+        getCategories()
+
+        getSizes()
+
+        getDiscounts()
+
+    }, [])
     return (
         <div className={styles.background} style={{ display: isOpen ? "" : "none" }}>
             <div className={styles.mainContainer}>
@@ -141,7 +241,7 @@ export const ModalCrearEditarProducto: FC<IModalCrearEditarProducto> = ({ isOpen
                             <Select
                                 className={styles.dropdown}
                                 styles={customStyles}
-                                options={mockedCategories}
+                                options={categorieOptions}
                                 isMulti
                                 value={selectedCategories}
                                 onChange={(newValues) => setSelectedCategories(newValues)}
@@ -156,7 +256,7 @@ export const ModalCrearEditarProducto: FC<IModalCrearEditarProducto> = ({ isOpen
                             <p className={styles.inputsContainer_inputContainer_label}>Talle:</p>
                             <Select className={styles.dropdown}
                                 styles={customStyles}
-                                options={mockedSize}
+                                options={sizesOptions}
                                 isMulti
                                 value={selectedSizes}
                                 onChange={(newValues) => setSelectedSizes(newValues)}
@@ -168,21 +268,44 @@ export const ModalCrearEditarProducto: FC<IModalCrearEditarProducto> = ({ isOpen
                                 name="precio" value={workingProduct.precio} onChange={handleChangeInputs} />
                         </div>
                         <div className={styles.inputsContainer_inputContainer}>
-                            <p className={styles.inputsContainer_inputContainer_label}>Precio:</p>
+                            <p className={styles.inputsContainer_inputContainer_label}>Stock:</p>
                             <input className={styles.inputsContainer_inputContainer_input} type="text"
                                 name="stock" value={workingProduct.stock} onChange={handleChangeInputs} />
                         </div>
                         <div className={styles.inputsContainer_inputContainer}>
+                            <p className={styles.inputsContainer_inputContainer_label}>Color:</p>
+                            <Select className={styles.dropdown}
+                                styles={customStyles}
+                                options={colors}
+                                value={selectedColors}
+                                onChange={(newValues) => setselectedColors(newValues)}
+                            />
+                        </div>
+                        <div className={styles.inputsContainer_inputContainer}>
+                            <p className={styles.inputsContainer_inputContainer_label}>Descuento:</p>
+                            <Select className={styles.dropdown}
+                                styles={customStyles}
+                                options={discountOptions}
+                                value={selectedDiscount}
+                                onChange={(newValues) => setSelectedDiscount(newValues)}
+                            />
+                        </div>
+                        <div className={styles.inputsContainer_inputContainer}>
                             <p className={styles.inputsContainer_inputContainer_label}>Imagen:</p>
-
+                            <div className={styles.inputsContainer_inputContainer_uploadImageContainer}>
+                                <input className={styles.imageInput} type="file" accept="image/*" onChange={handleFileChange} />
+                                {imageUrl && (
+                                    <div>
+                                        <p>Preview:</p>
+                                        <img src={imageUrl} alt="" width="120" />
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
-                    <div className={styles.colorInputsContainer}>
-                        colors
-                    </div>
                     <div className={styles.bottomButtonsContaner}>
-                        <Button text="Cancelar" action={() => { }} styleSet={false} />
-                        <Button text="Crear" action={() => { }} styleSet={false} />
+                        <Button text="Cancelar" action={handleClose} styleSet={false} />
+                        <Button text="Crear" action={handleSave} styleSet={false} />
                     </div>
                 </div>
             </div>

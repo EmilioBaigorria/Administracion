@@ -7,7 +7,7 @@ const baseURL=`${APIURL}/talles`
 
 export const getAllSizes=async()=>{
     try {
-        const response=await axios.get(`${baseURL}`,{headers:{"Authorization":getLocalToken()}})
+        const response=await axios.get(`${baseURL}`)
         if(response){
             return response.data
         }
@@ -18,7 +18,7 @@ export const getAllSizes=async()=>{
 }
 export const getSizeById=async(id:string)=>{
     try {
-        const response=await axios.get(`${baseURL}/${id}`,{headers:{"Authorization":getLocalToken()}})
+        const response=await axios.get(`${baseURL}/${id}`)
         if(response){
             return response.data
         }

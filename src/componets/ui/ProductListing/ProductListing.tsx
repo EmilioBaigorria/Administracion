@@ -3,28 +3,18 @@ import styles from "./ProductListing.module.css"
 import { IProduct } from "../../../types/IProduct"
 import { Button } from "../Button/Button"
 import { ProductBarCard } from "../ProductBarCard/ProductBarCard"
+import { getAllProducts } from "../../../http/productRequest"
 interface IProductListing {
     setProductModal: Function
 }
 export const ProductListing: FC<IProductListing> = ({ setProductModal }) => {
-    const exampleProduct: IProduct = {
-        id: Date.toString(),
-        nombre: "ExampleName",
-        stock: 2,
-        precio: 150000,
-        descripcion: "ExampleDesc",
-        categoria: [],
-        talle: "38",
-        color: ["red", "blue", "yellow"],
-        marca: "Adidas",
-        id_descuento_producto: "none",
-        id_talle_producto: "none"
-    }
-    const productMock: IProduct[] = [exampleProduct, exampleProduct]
     const [products, setProducts] = useState<IProduct[]>([])
-
+    const getProducts=async ()=>{
+        const productsData=await getAllProducts()
+        setProducts(productsData)
+    }
     useEffect(() => {
-        setProducts(productMock)
+        getProducts()
     }, [])
     return (
         <div className={styles.mainContainer}>

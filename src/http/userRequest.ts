@@ -7,7 +7,7 @@ const baseURL=`${APIURL}/usuarios`
 
 export const getAllUsers=async()=>{
     try {
-        const response=await axios.get(`${baseURL}`,{headers:{"Authorization":getLocalToken()}})
+        const response=await axios.get(`${baseURL}`)
         if(response){
             return response.data
         }
@@ -18,7 +18,7 @@ export const getAllUsers=async()=>{
 }
 export const getUserById=async(id:string)=>{
     try {
-        const response=await axios.get(`${baseURL}/${id}`,{headers:{"Authorization":getLocalToken()}})
+        const response=await axios.get(`${baseURL}/${id}`)
         if(response){
             return response.data
         }

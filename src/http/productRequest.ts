@@ -9,7 +9,7 @@ const baseURL=`${APIURL}/productos`
 
 export const getAllProducts=async()=>{
     try {
-        const response=await axios.get(`${baseURL}`,{headers:{"Authorization":getLocalToken()}})
+        const response=await axios.get(`${baseURL}`)
         if(response){
             return response.data
         }
@@ -20,7 +20,7 @@ export const getAllProducts=async()=>{
 }
 export const getProductById=async(id:string)=>{
     try {
-        const response=await axios.get(`${baseURL}/${id}`,{headers:{"Authorization":getLocalToken()}})
+        const response=await axios.get(`${baseURL}/${id}`)
         if(response){
             return response.data
         }
@@ -29,7 +29,7 @@ export const getProductById=async(id:string)=>{
         console.log("Ocurrio un error durante la obtencion de un producto ",error)
     }
 }
-export const createProducts=async(newProduct:IProduct)=>{
+export const createProduct=async(newProduct:IProduct)=>{
     try {
         const response=await axios.post(`${baseURL}`,newProduct,{headers:{"Authorization":getLocalToken()}})
         if(response){
