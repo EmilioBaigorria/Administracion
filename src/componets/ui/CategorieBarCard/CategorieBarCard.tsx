@@ -17,12 +17,12 @@ export const CategorieBarCard: FC<ICategorieBarCard> = ({ categorie }) => {
                     <span className="material-symbols-outlined">
                         edit
                     </span>
-                } action={() => { }} />
+                } styleSet={false} action={() => { }} />
                 <Button icon={
                     <span className="material-symbols-outlined">
                         delete
                     </span>
-                } action={() => { }} />
+                } styleSet={false} action={() => { }} />
             </div>
         </div>
     )

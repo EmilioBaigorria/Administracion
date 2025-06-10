@@ -14,7 +14,6 @@ export const ProductBarCard: FC<ProductBarCard> = ({ product }) => {
     return (
         <div className={styles.mainContainer}>
             <div className={styles.infoContainer}>
-
                 <p>Nombre:{product.nombre}</p>
                 <p>Categorias:{ }</p>
                 <p>Stock:{product.stock}</p>
@@ -27,12 +26,14 @@ export const ProductBarCard: FC<ProductBarCard> = ({ product }) => {
                     <span className="material-symbols-outlined">
                         edit
                     </span>
-                } action={handleSetActiveProduct} />
+                } action={handleSetActiveProduct}
+                styleSet={false} />
                 <Button icon={
                     <span className="material-symbols-outlined">
                         delete
                     </span>
-                } action={() => { }} />
+                } action={() => { }}
+                styleSet={false} />
 
             </div>
         </div>
