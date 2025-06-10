@@ -203,9 +203,8 @@ export const ModalCrearEditarProducto: FC<IModalCrearEditarProducto> = ({ isOpen
             descuento:productDiscount,
             talles: productSizes,
         }
-        console.log(newProduct)
-        const response=await createProduct(newProduct)
-        console.log(response)
+        await createProduct(newProduct)
+        handleClose()
     }
 
     const handleClose = () => {

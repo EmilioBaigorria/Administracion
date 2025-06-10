@@ -28,8 +28,9 @@ export const ModalCreateEditeCategorie: FC<IModalCreateEditeCategorie> = ({ isOp
             nombre:workingCategorie.nombre
         }
         const response=await createCategorie(newCategorie)
-        console.log(newCategorie)
-        console.log(response)
+        if(response){
+            handleClose()
+        }
     }
     return (
         <div className={styles.background} style={{ display: isOpen ? "" : "none" }}>

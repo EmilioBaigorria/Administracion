@@ -29,7 +29,7 @@ export const getSizeById=async(id:string)=>{
 }
 export const createSize=async(size:ISize)=>{
     try {
-        const response=await axios.post(`${baseURL}`,size,{headers:{"Authorization":getLocalToken()}})
+        const response=await axios.post(`${baseURL}`,size,{headers:{"Authorization":`Bearer ${getLocalToken()}`}})
         if(response){
             return response.data
         }
@@ -40,7 +40,7 @@ export const createSize=async(size:ISize)=>{
 }
 export const updateSize=async(updatedSize:ISize)=>{
     try {
-        const response=await axios.put(`${baseURL}/${updatedSize.id}`,updatedSize,{headers:{"Authorization":getLocalToken()}})
+        const response=await axios.put(`${baseURL}/${updatedSize.id}`,updatedSize,{headers:{"Authorization":`Bearer ${getLocalToken()}`}})
         if(response){
             return response.data
         }
@@ -51,7 +51,7 @@ export const updateSize=async(updatedSize:ISize)=>{
 }
 export const deleteSizeById=async(id:string)=>{
     try {
-        const response=await axios.delete(`${baseURL}/${id}`,{headers:{"Authorization":getLocalToken()}})
+        const response=await axios.delete(`${baseURL}/${id}`,{headers:{"Authorization":`Bearer ${getLocalToken()}`}})
         if(response){
             return {message:"El talle fue eliminado correctamente"}
         }

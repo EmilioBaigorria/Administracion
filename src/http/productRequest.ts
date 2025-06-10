@@ -31,7 +31,6 @@ export const getProductById=async(id:string)=>{
 }
 export const createProduct=async(newProduct:IProduct)=>{
     try {
-        console.log(`Bearer ${getLocalToken()}`)
         const response=await axios.post(`${baseURL}`,newProduct,{headers:{"Authorization":`Bearer ${getLocalToken()}`}})
         if(response){
             return response.data
@@ -50,7 +49,7 @@ export const createProduct=async(newProduct:IProduct)=>{
 }
 export const updateProduct=async(updatedProduct:IProduct)=>{
     try {
-        const response=await axios.put(`${baseURL}/${updatedProduct.id}`,updatedProduct,{headers:{"Authorization":getLocalToken()}})
+        const response=await axios.put(`${baseURL}/${updatedProduct.id}`,updatedProduct,{headers:{"Authorization":`Bearer ${getLocalToken()}`}})
         if(response){
             return response.data
         }
@@ -61,7 +60,7 @@ export const updateProduct=async(updatedProduct:IProduct)=>{
 }
 export const deleteProductById=async(id:string)=>{
     try {
-        const response=await axios.delete(`${baseURL}/${id}`,{headers:{"Authorization":getLocalToken()}})
+        const response=await axios.delete(`${baseURL}/${id}`,{headers:{"Authorization":`Bearer ${getLocalToken()}`}})
         if(response){
             return {message:"El producto fue eliminado correctamente"}
         }

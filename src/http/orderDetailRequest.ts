@@ -10,7 +10,7 @@ const baseURL=`${APIURL}/NONE`
 
 export const getAllOrderDetail=async()=>{
     try {
-        const response=await axios.get(`${baseURL}`,{headers:{"Authorization":getLocalToken()}})
+        const response=await axios.get(`${baseURL}`)
         if(response){
             return response.data
         }
@@ -21,7 +21,7 @@ export const getAllOrderDetail=async()=>{
 }
 export const getOrderDetailById=async(id:string)=>{
     try {
-        const response=await axios.get(`${baseURL}/${id}`,{headers:{"Authorization":getLocalToken()}})
+        const response=await axios.get(`${baseURL}/${id}`)
         if(response){
             return response.data
         }
@@ -32,7 +32,7 @@ export const getOrderDetailById=async(id:string)=>{
 }
 export const createOrderDetail=async(newOrderDetail:IOrderDetail)=>{
     try {
-        const response=await axios.post(`${baseURL}`,newOrderDetail,{headers:{"Authorization":getLocalToken()}})
+        const response=await axios.post(`${baseURL}`,newOrderDetail,{headers:{"Authorization":`Bearer ${getLocalToken()}`}})
         if(response){
             return response.data
         }
@@ -43,7 +43,7 @@ export const createOrderDetail=async(newOrderDetail:IOrderDetail)=>{
 }
 export const updateOrderDetail=async(updatedOrderDetail:IOrderDetail)=>{
     try {
-        const response=await axios.put(`${baseURL}/${updatedOrderDetail.id}`,updatedOrderDetail,{headers:{"Authorization":getLocalToken()}})
+        const response=await axios.put(`${baseURL}/${updatedOrderDetail.id}`,updatedOrderDetail,{headers:{"Authorization":`Bearer ${getLocalToken()}`}})
         if(response){
             return response.data
         }
@@ -54,7 +54,7 @@ export const updateOrderDetail=async(updatedOrderDetail:IOrderDetail)=>{
 }
 export const deleteOrderDetailById=async(id:string)=>{
     try {
-        const response=await axios.delete(`${baseURL}/${id}`,{headers:{"Authorization":getLocalToken()}})
+        const response=await axios.delete(`${baseURL}/${id}`,{headers:{"Authorization":`Bearer ${getLocalToken()}`}})
         if(response){
             return {message:"El producto fue eliminado correctamente"}
         }

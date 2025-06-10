@@ -32,7 +32,7 @@ export const getBuyOrderById=async(id:string)=>{
 }
 export const createBuyOrder=async(newBuyOrder:IBuyOrder)=>{
     try {
-        const response=await axios.post(`${baseURL}`,newBuyOrder,{headers:{"Authorization":getLocalToken()}})
+        const response=await axios.post(`${baseURL}`,newBuyOrder,{headers:{"Authorization":`Bearer ${getLocalToken()}`}})
         if(response){
             return response.data
         }
@@ -43,7 +43,7 @@ export const createBuyOrder=async(newBuyOrder:IBuyOrder)=>{
 }
 export const updateBuyOrder=async(updatedBuyOrder:IBuyOrder)=>{
     try {
-        const response=await axios.put(`${baseURL}/${updatedBuyOrder.id}`,updatedBuyOrder,{headers:{"Authorization":getLocalToken()}})
+        const response=await axios.put(`${baseURL}/${updatedBuyOrder.id}`,updatedBuyOrder,{headers:{"Authorization":`Bearer ${getLocalToken()}`}})
         if(response){
             return response.data
         }
@@ -54,7 +54,7 @@ export const updateBuyOrder=async(updatedBuyOrder:IBuyOrder)=>{
 }
 export const deleteBuyOrderById=async(id:string)=>{
     try {
-        const response=await axios.delete(`${baseURL}/${id}`,{headers:{"Authorization":getLocalToken()}})
+        const response=await axios.delete(`${baseURL}/${id}`,{headers:{"Authorization":`Bearer ${getLocalToken()}`}})
         if(response){
             return {message:"La orden de compra fue eliminada correctamente"}
         }

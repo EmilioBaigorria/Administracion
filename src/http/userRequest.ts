@@ -29,7 +29,7 @@ export const getUserById=async(id:string)=>{
 }
 export const createUser=async(newUser:IUser)=>{
     try {
-        const response=await axios.post(`${baseURL}`,newUser,{headers:{"Authorization":getLocalToken()}})
+        const response=await axios.post(`${baseURL}`,newUser,{headers:{"Authorization":`Bearer ${getLocalToken()}`}})
         if(response){
             return response.data
         }
@@ -41,7 +41,7 @@ export const createUser=async(newUser:IUser)=>{
 
 export const updateUser=async(updatedUser:IUser)=>{
     try {
-        const response=await axios.put(`${baseURL}/${updatedUser.id}`,updatedUser,{headers:{"Authorization":getLocalToken()}})
+        const response=await axios.put(`${baseURL}/${updatedUser.id}`,updatedUser,{headers:{"Authorization":`Bearer ${getLocalToken()}`}})
         if(response){
             return response.data
         }
@@ -52,7 +52,7 @@ export const updateUser=async(updatedUser:IUser)=>{
 }
 export const deleteUser=async(id:string)=>{
     try {
-        const response=await axios.delete(`${baseURL}/${id}`,{headers:{"Authorization":getLocalToken()}})
+        const response=await axios.delete(`${baseURL}/${id}`,{headers:{"Authorization":`Bearer ${getLocalToken()}`}})
         if(response){
             return {message:"El usuario fue eliminado correctamente"}
         }
