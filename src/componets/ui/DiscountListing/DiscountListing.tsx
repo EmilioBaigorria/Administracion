@@ -23,7 +23,7 @@ export const DiscountListing:FC<IDiscountListing> = ({setDiscountModal}) => {
     <div className={styles.mainContainer}>
             <div className={styles.headerContainer}>
                 <div className={styles.headerContainer_text}>
-                    <p>Productos</p>
+                    <p>Descuentos</p>
                 </div>
                 <div>
                     <Button text="Agregar Descuento" action={()=>setDiscountModal(true)} styleSet={false} />

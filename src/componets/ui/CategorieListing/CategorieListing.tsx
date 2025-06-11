@@ -25,7 +25,7 @@ export const CategorieListing:FC<ICategorieListing> = ({setCategorieModal}) => {
     <div className={styles.mainContainer}>
             <div className={styles.headerContainer}>
                 <div className={styles.headerContainer_text}>
-                    <p>Productos</p>
+                    <p>Categorias</p>
                 </div>
                 <div>
                     <Button text="Agregar Categoria" action={()=>setCategorieModal(true)} styleSet={false} />
