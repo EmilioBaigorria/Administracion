@@ -35,7 +35,7 @@ export const ModalCreateEditSize:FC<IModalCreateEditeSize> = ({isOpen,onClose}) 
             const response=await updateSize(workingSize)
             if(response){
                 Swal.fire({
-                    position: "center-end",
+                    position: "top-end",
                     icon: "success",
                     title: "Talle Actualizada",
                     showConfirmButton: false,
@@ -50,7 +50,7 @@ export const ModalCreateEditSize:FC<IModalCreateEditeSize> = ({isOpen,onClose}) 
             const response=await createSize(newSize)
             if(response){
                 Swal.fire({
-                    position: "center-end",
+                    position: "top-end",
                     icon: "success",
                     title: "Talle Creada",
                     showConfirmButton: false,

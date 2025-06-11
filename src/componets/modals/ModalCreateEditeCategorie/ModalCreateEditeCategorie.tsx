@@ -34,7 +34,7 @@ export const ModalCreateEditeCategorie: FC<IModalCreateEditeCategorie> = ({ isOp
             const response=await updateCategorie(workingCategorie)
             if(response){
                 Swal.fire({
-                    position: "center-end",
+                    position: "top-end",
                     icon: "success",
                     title: "Categoria Actualizada",
                     showConfirmButton: false,
@@ -49,7 +49,7 @@ export const ModalCreateEditeCategorie: FC<IModalCreateEditeCategorie> = ({ isOp
             const response=await createCategorie(newCategorie)
             if(response){
                 Swal.fire({
-                    position: "center-end",
+                    position: "top-end",
                     icon: "success",
                     title: "Categoria Creada",
                     showConfirmButton: false,

@@ -206,7 +206,7 @@ export const ModalCrearEditarProducto: FC<IModalCrearEditarProducto> = ({ isOpen
         }
         await createProduct(newProduct)
         Swal.fire({
-            position: "center-end",
+            position: "top-end",
             icon: "success",
             title: "Producto creado",
             showConfirmButton: false,

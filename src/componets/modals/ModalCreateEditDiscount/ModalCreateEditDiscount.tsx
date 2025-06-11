@@ -48,7 +48,7 @@ export const ModalCreateEditDiscount:FC<IModalCreateEditeDiscount> = ({isOpen,on
             const response=await updateDiscount(updatedDiscount)
             if(response){
                 Swal.fire({
-                position: "center-end",
+                position: "top-end",
                 icon: "success",
                 title: "Descuento Actualizado",
                 showConfirmButton: false,
@@ -66,7 +66,7 @@ export const ModalCreateEditDiscount:FC<IModalCreateEditeDiscount> = ({isOpen,on
             const response=await createDiscount(newDiscount)
             if(response){
                 Swal.fire({
-                position: "center-end",
+                position: "top-end",
                 icon: "success",
                 title: "Descuento Creado",
                 showConfirmButton: false,
