@@ -188,7 +188,7 @@ export const ModalCrearEditarProducto: FC<IModalCrearEditarProducto> = ({ isOpen
             })
         );
         
-        const productDiscount=selectedDiscount?.value ? await getDiscountById(selectedDiscount.value): null
+        const productDiscount=selectedDiscount?.value ? await getDiscountById(selectedDiscount.value): await getDiscountById("1")
         
 
 
