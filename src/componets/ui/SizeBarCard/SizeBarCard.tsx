@@ -2,11 +2,39 @@ import { FC } from "react"
 import { ISize } from "../../../types/ISize"
 import { Button } from "../Button/Button"
 import styles from "./SizeBarCard.module.css"
+import Swal from "sweetalert2"
+import { deleteSizeById } from "../../../http/sizeRequest"
+import { useSizeStore } from "../../../store/sizeStore"
 interface ISizeBarCard{
     size:ISize
+    setSizeModal:Function
 }
-export const SizeBarCard:FC<ISizeBarCard> = ({ size }) => {
-    
+export const SizeBarCard:FC<ISizeBarCard> = ({ size,setSizeModal }) => {
+    const setActiveSize=useSizeStore((state)=>state.setActiveSize)
+    const handleDeleteSize=async()=>{
+        Swal.fire({
+            title: "¿Seguro?",
+            text: "Esta accion es irreversible",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            cancelButtonText:"Cancelar",
+            confirmButtonText: "Eliminar"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await deleteSizeById(size.id!.toString())
+                Swal.fire({
+                title: "Talle Eliminada",
+                icon: "success"
+                });
+                }
+            });
+        }
+    const handleOpenEditModal=()=>{
+        setActiveSize(size)
+        setSizeModal(true)
+    }
     return (
         <div className={styles.mainContainer}>
             <div className={styles.infoContainer}>
@@ -19,13 +47,13 @@ export const SizeBarCard:FC<ISizeBarCard> = ({ size }) => {
                     <span className="material-symbols-outlined">
                         edit
                     </span>
-                } action={()=>{ }}
+                } action={handleOpenEditModal}
                 styleSet={false} />
                 <Button icon={
                     <span className="material-symbols-outlined">
                         delete
                     </span>
-                } action={() => { }}
+                } action={handleDeleteSize}
                 styleSet={false} />
 
             </div>

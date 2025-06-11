@@ -28,7 +28,7 @@ export const SizeListing:FC<ISizeListing> = ({setSizeModal}) => {
             </div>
             <div className={styles.productsContainer}>
                 {sizes.map((el, key) => (
-                    <SizeBarCard key={key} size={el} />
+                    <SizeBarCard key={key} size={el} setSizeModal={setSizeModal}/>
                 ))}
             </div>
         </div>

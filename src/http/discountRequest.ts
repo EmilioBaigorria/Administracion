@@ -49,11 +49,11 @@ export const updateDiscount=async(updatedDiscount:IDiscount)=>{
         console.log("Ocurrio un error durante la actualizacion de un descuento: ",error)
     }
 }
-export const deleteDiscount=async(id:string)=>{
+export const deleteDiscountById=async(id:string)=>{
     try {
         const response=await axios.delete(`${baseURL}/${id}`,{headers:{"Authorization":`Bearer ${getLocalToken()}`}})
         if(response){
-            return {message:"El talle fue eliminado correctamente"}
+            return {message:"El descuento fue eliminado correctamente"}
         }
         return null
     } catch (error) {

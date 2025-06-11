@@ -33,7 +33,7 @@ export const CategorieListing:FC<ICategorieListing> = ({setCategorieModal}) => {
             </div>
             <div className={styles.categoriesContainer}>
                 {categories.map((el)=>(
-                    <CategorieBarCard key={el.id} categorie={el}/>
+                    <CategorieBarCard key={el.id} categorie={el} setCategorieModal={setCategorieModal}/>
                 ))}
             </div>
         </div>

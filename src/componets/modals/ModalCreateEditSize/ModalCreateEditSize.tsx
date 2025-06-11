@@ -1,11 +1,11 @@
-import { ChangeEvent, FC, useState } from "react"
+import { ChangeEvent, FC, useEffect, useState } from "react"
 import { ISize } from "../../../types/ISize"
 import { Button } from "../../ui/Button/Button"
 import styles from "./ModalCreateEditSize.module.css"
-import { createSize } from "../../../http/sizeRequest"
+import { createSize, updateSize } from "../../../http/sizeRequest"
+import { useSizeStore } from "../../../store/sizeStore"
 
 const initialValues: ISize = {
-    id: "",
     talle:""
 }
 interface IModalCreateEditeSize {
@@ -14,11 +14,15 @@ interface IModalCreateEditeSize {
 }
 
 export const ModalCreateEditSize:FC<IModalCreateEditeSize> = ({isOpen,onClose}) => {
+
+    const activeSize=useSizeStore((state)=>state.activeSize)
+    const removeSize=useSizeStore((state)=>state.deleteSize)
   
     const [workingSize, setWorkingSize] = useState<ISize>(initialValues)
 
     const handleClose = () => {
         setWorkingSize(initialValues)
+        removeSize()
         onClose(false)
     }
     const handleChangeInputs = (event: ChangeEvent<HTMLInputElement>) => {
@@ -26,19 +30,31 @@ export const ModalCreateEditSize:FC<IModalCreateEditeSize> = ({isOpen,onClose}) 
         setWorkingSize((prev) => ({ ...prev, [`${name}`]: value }))
     }
     const handleSave=async ()=>{
-        const newSize:ISize={
-            talle:workingSize.talle
-        }
-        const response=await createSize(newSize)
-        if(response){
-            handleClose()
+        if(activeSize){
+            const response=await updateSize(workingSize)
+            if(response){
+                handleClose()
+            }
+        }else{
+            const newSize:ISize={
+                talle:workingSize.talle
+            }
+            const response=await createSize(newSize)
+            if(response){
+                handleClose()
+            }
         }
     }
+    useEffect(()=>{
+        if(activeSize){
+            setWorkingSize(activeSize)
+        }
+    },[activeSize])
     return (
         <div className={styles.background} style={{ display: isOpen ? "" : "none" }}>
             <div className={styles.mainContainer}>
                 <div className={styles.header}>
-                    <p>{workingSize.talle == "" ? "Añadir talle" : "Editar talle"}</p>
+                    <p>{!workingSize.id? "Añadir talle" : "Editar talle"}</p>
                     <div className={styles.header_X} onClick={handleClose}>✖</div>
                 </div>
                 <div className={styles.mainContentContainer}>
@@ -51,7 +67,7 @@ export const ModalCreateEditSize:FC<IModalCreateEditeSize> = ({isOpen,onClose}) 
                     </div>
                     <div className={styles.bottomButtonsContaner}>
                         <Button text="Cancelar" action={handleClose} styleSet={false} />
-                        <Button text="Crear" action={handleSave } styleSet={false} />
+                        <Button text={workingSize.id?"Editar":"Crear"} action={handleSave } styleSet={false} />
                     </div>
                 </div>
             </div>
