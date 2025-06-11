@@ -9,6 +9,8 @@ export const Sidebar = () => {
         <div className={styles.buttonsContainer}>
             <Button text="Productos" action={()=>{navigate("/products")}}/>
             <Button text="Categorias" action={()=>{navigate("/categories")}}/>
+            <Button text="Talles" action={()=>{navigate("/talles")}}/>
+            <Button text="Descuentos" action={()=>{navigate("/descuento")}}/>
         </div>
     </div>
   )

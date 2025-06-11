@@ -6,13 +6,13 @@ import { CategorieBarCard } from '../CategorieBarCard/CategorieBarCard'
 import { getAllCategories } from '../../../http/categorieRequest'
 
 
-const initialValues:ICategories[]=[{nombre:"Urbano",id:11},{nombre:"Hombre",id:12}]
+//const initialValues:ICategories[]=[{nombre:"Urbano",id:11},{nombre:"Hombre",id:12}]
 interface ICategorieListing{
     setCategorieModal:Function
 }
 export const CategorieListing:FC<ICategorieListing> = ({setCategorieModal}) => {
     
-    const [categories,setCategories]=useState<ICategories[]>(initialValues)
+    const [categories,setCategories]=useState<ICategories[]>([])
     const getCategories=async()=>{
         const allCategories=await getAllCategories()
         setCategories(allCategories)
