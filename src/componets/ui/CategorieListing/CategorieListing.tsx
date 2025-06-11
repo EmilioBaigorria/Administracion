@@ -9,8 +9,9 @@ import { getAllCategories } from '../../../http/categorieRequest'
 //const initialValues:ICategories[]=[{nombre:"Urbano",id:11},{nombre:"Hombre",id:12}]
 interface ICategorieListing{
     setCategorieModal:Function
+    categorieModal:boolean
 }
-export const CategorieListing:FC<ICategorieListing> = ({setCategorieModal}) => {
+export const CategorieListing:FC<ICategorieListing> = ({setCategorieModal,categorieModal}) => {
     
     const [categories,setCategories]=useState<ICategories[]>([])
     const getCategories=async()=>{
@@ -19,7 +20,7 @@ export const CategorieListing:FC<ICategorieListing> = ({setCategorieModal}) => {
     }
     useEffect(()=>{
         getCategories()
-    },[])
+    },[categorieModal])
 
   return (
     <div className={styles.mainContainer}>

@@ -4,6 +4,7 @@ import { Button } from "../../ui/Button/Button"
 import styles from "./ModalCreateEditSize.module.css"
 import { createSize, updateSize } from "../../../http/sizeRequest"
 import { useSizeStore } from "../../../store/sizeStore"
+import Swal from "sweetalert2"
 
 const initialValues: ISize = {
     talle:""
@@ -33,6 +34,13 @@ export const ModalCreateEditSize:FC<IModalCreateEditeSize> = ({isOpen,onClose}) 
         if(activeSize){
             const response=await updateSize(workingSize)
             if(response){
+                Swal.fire({
+                    position: "center-end",
+                    icon: "success",
+                    title: "Talle Actualizada",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 handleClose()
             }
         }else{
@@ -41,6 +49,13 @@ export const ModalCreateEditSize:FC<IModalCreateEditeSize> = ({isOpen,onClose}) 
             }
             const response=await createSize(newSize)
             if(response){
+                Swal.fire({
+                    position: "center-end",
+                    icon: "success",
+                    title: "Talle Creada",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 handleClose()
             }
         }

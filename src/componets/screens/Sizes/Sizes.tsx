@@ -15,7 +15,7 @@ export const Sizes = () => {
       </div>
       <div className={styles.contentContainer}>
         <Sidebar />
-        <SizeListing setSizeModal={setSizeModal}/>
+        <SizeListing setSizeModal={setSizeModal} sizeModal={sizeModal}/>
       </div>
     </div>
   )

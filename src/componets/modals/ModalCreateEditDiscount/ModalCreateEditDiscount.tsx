@@ -1,8 +1,10 @@
-import { ChangeEvent, FC, useState } from "react"
+import { ChangeEvent, FC, useEffect, useState } from "react"
 import { IDiscount } from "../../../types/IDiscount"
 import styles from "./ModalCreateEditDiscount.module.css"
-import { createDiscount } from "../../../http/discountRequest"
+import { createDiscount, updateDiscount } from "../../../http/discountRequest"
 import { Button } from "../../ui/Button/Button"
+import { useDiscountStore } from "../../../store/discountStore"
+import Swal from "sweetalert2"
 interface ICreateDiscount{
     fechaCierre:string,
     fechaInicio:string
@@ -20,10 +22,14 @@ interface IModalCreateEditeDiscount {
 }
 
 export const ModalCreateEditDiscount:FC<IModalCreateEditeDiscount> = ({isOpen,onClose}) => {
-  const [workingDicount, setWorkingDicount] = useState<ICreateDiscount>(initialValues)
+    const activeDiscount=useDiscountStore((state)=>state.activeDiscount)
+    const removeDiscount=useDiscountStore((state)=>state.deleteDiscount)
+
+    const [workingDicount, setWorkingDicount] = useState<ICreateDiscount>(initialValues)
 
     const handleClose = () => {
         setWorkingDicount(initialValues)
+        removeDiscount()
         onClose(false)
     }
     const handleChangeInputs = (event: ChangeEvent<HTMLInputElement>) => {
@@ -31,23 +37,70 @@ export const ModalCreateEditDiscount:FC<IModalCreateEditeDiscount> = ({isOpen,on
         setWorkingDicount((prev) => ({ ...prev, [`${name}`]: value }))
     }
     const handleSave=async ()=>{
-        const newDiscount:IDiscount={
-            fechaInicio:new Date(workingDicount.fechaInicio),
-            fechaCierre:new Date(workingDicount.fechaCierre),
-            descuento:workingDicount.descuento,
-            productos:[]
+        if(activeDiscount){
+            const updatedDiscount:IDiscount={
+                id:activeDiscount.id,
+                fechaInicio:new Date(workingDicount.fechaInicio),
+                fechaCierre:new Date(workingDicount.fechaCierre),
+                descuento:workingDicount.descuento,
+                productos:[]
+            }
+            const response=await updateDiscount(updatedDiscount)
+            if(response){
+                Swal.fire({
+                position: "center-end",
+                icon: "success",
+                title: "Descuento Actualizado",
+                showConfirmButton: false,
+                timer: 1500
+                });
+                handleClose()
+            }
+        }else{
+            const newDiscount:IDiscount={
+                fechaInicio:new Date(workingDicount.fechaInicio),
+                fechaCierre:new Date(workingDicount.fechaCierre),
+                descuento:workingDicount.descuento,
+                productos:[]
+            }
+            const response=await createDiscount(newDiscount)
+            if(response){
+                Swal.fire({
+                position: "center-end",
+                icon: "success",
+                title: "Descuento Creado",
+                showConfirmButton: false,
+                timer: 1500
+                });
+                handleClose()
+            }
         }
-        console.log(newDiscount)
-        const response=await createDiscount(newDiscount)
-        if(response){
-            handleClose()
-        }
+    
     }
+    const convertirFecha=(date: string): string =>{
+        const [dia, mes, anio] = date.split('/').map(Number);
+
+        const diaConCero = dia.toString().padStart(2, '0');
+        const mesConCero = mes.toString().padStart(2, '0');
+
+        return `${anio}-${mesConCero}-${diaConCero}`;
+    }
+    useEffect(()=>{
+        if(activeDiscount){
+            const parseDiscount:ICreateDiscount={
+                fechaInicio:convertirFecha(new Date(activeDiscount.fechaInicio).toLocaleDateString()),
+                fechaCierre:convertirFecha(new Date(activeDiscount.fechaCierre).toLocaleDateString()),
+                descuento:activeDiscount.descuento
+            }
+            setWorkingDicount(parseDiscount)
+        }
+    },[activeDiscount])
+
     return (
         <div className={styles.background} style={{ display: isOpen ? "" : "none" }}>
             <div className={styles.mainContainer}>
                 <div className={styles.header}>
-                    <p>{workingDicount.descuento == 0 ? "Añadir descuento" : "Editar descuento"}</p>
+                    <p>{!activeDiscount ? "Añadir descuento" : "Editar descuento"}</p>
                     <div className={styles.header_X} onClick={handleClose}>✖</div>
                 </div>
                 <div className={styles.mainContentContainer}>
@@ -70,7 +123,7 @@ export const ModalCreateEditDiscount:FC<IModalCreateEditeDiscount> = ({isOpen,on
                     </div>
                     <div className={styles.bottomButtonsContaner}>
                         <Button text="Cancelar" action={handleClose} styleSet={false} />
-                        <Button text="Crear" action={handleSave } styleSet={false} />
+                        <Button text={activeDiscount?"Editar":"Crear"} action={handleSave } styleSet={false} />
                     </div>
                 </div>
             </div>

@@ -5,14 +5,16 @@ import { FC } from "react"
 import Swal from "sweetalert2"
 import { deleteDiscountById } from "../../../http/discountRequest"
 import { useCategorieStore } from "../../../store/categorieStore"
+import { useDiscountStore } from "../../../store/discountStore"
 
 
 interface IDiscountBarCard {
     discount: IDiscount
+    setDiscountModal:Function
 }
 
-export const DiscountBarCard:FC<IDiscountBarCard> = ({discount}) => {
-
+export const DiscountBarCard:FC<IDiscountBarCard> = ({discount,setDiscountModal}) => {
+    const setActiveDiscount=useDiscountStore((state)=>state.setActiveDiscount)
     const handleDeleteDiscount=async()=>{
             Swal.fire({
                 title: "¿Seguro?",
@@ -34,14 +36,15 @@ export const DiscountBarCard:FC<IDiscountBarCard> = ({discount}) => {
             });
         }
     const handleOpenEditModal=()=>{
-
+        setActiveDiscount(discount)
+        setDiscountModal(true)
     }
   return (
         <div className={styles.mainContainer}>
             <div className={styles.infoContainer}>
                 <p>Porcentaje:{discount.descuento}</p>
                 <p>Inicia:{new Date(discount.fechaInicio.toString()).toLocaleDateString()}</p>
-                <p>Termina:{new Date(discount.fechaInicio.toString()).toLocaleDateString()}</p>
+                <p>Termina:{new Date(discount.fechaCierre.toString()).toLocaleDateString()}</p>
             </div>
             <div className={styles.buttonsContainer}>
                 <Button icon={

@@ -12,6 +12,7 @@ import { getAllSizes, getSizeById } from "../../../http/sizeRequest"
 import { IDiscount } from "../../../types/IDiscount"
 import { getAllDiscounts, getDiscountById } from "../../../http/discountRequest"
 import { createProduct } from "../../../http/productRequest"
+import Swal from "sweetalert2"
 const initialValues: IProduct = {
     id: 0,
     nombre: "",
@@ -204,7 +205,15 @@ export const ModalCrearEditarProducto: FC<IModalCrearEditarProducto> = ({ isOpen
             talles: productSizes,
         }
         await createProduct(newProduct)
+        Swal.fire({
+            position: "center-end",
+            icon: "success",
+            title: "Producto creado",
+            showConfirmButton: false,
+            timer: 1500
+            });
         handleClose()
+
     }
 
     const handleClose = () => {

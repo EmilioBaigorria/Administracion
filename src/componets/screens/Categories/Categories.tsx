@@ -15,7 +15,7 @@ export const Categories = () => {
       </div>
       <div className={styles.contentContainer}>
         <Sidebar />
-        <CategorieListing setCategorieModal={setCategorieModal}/>
+        <CategorieListing setCategorieModal={setCategorieModal} categorieModal={categorieModal}/>
       </div>
     </div>
   )

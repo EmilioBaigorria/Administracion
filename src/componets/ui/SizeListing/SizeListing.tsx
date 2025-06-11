@@ -6,8 +6,9 @@ import { getAllSizes } from "../../../http/sizeRequest"
 import { SizeBarCard } from "../SizeBarCard/SizeBarCard"
 interface ISizeListing {
     setSizeModal:Function
+    sizeModal:boolean
 }
-export const SizeListing:FC<ISizeListing> = ({setSizeModal}) => {
+export const SizeListing:FC<ISizeListing> = ({setSizeModal,sizeModal}) => {
     const [sizes, setsizes] = useState<ISize[]>([])
     const getSizes=async ()=>{
         const sizeData=await getAllSizes()
@@ -15,7 +16,7 @@ export const SizeListing:FC<ISizeListing> = ({setSizeModal}) => {
     }
     useEffect(() => {
         getSizes()
-    }, [])
+    }, [sizeModal])
     return (
         <div className={styles.mainContainer}>
             <div className={styles.headerContainer}>

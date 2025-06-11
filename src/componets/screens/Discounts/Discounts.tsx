@@ -15,7 +15,7 @@ export const Discounts = () => {
       </div>
       <div className={styles.contentContainer}>
         <Sidebar />
-        <DiscountListing setDiscountModal={setDiscountModal} />
+        <DiscountListing setDiscountModal={setDiscountModal} discountModal={discountModal} />
       </div>
     </div>
   )

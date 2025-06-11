@@ -6,9 +6,10 @@ import { getAllDiscounts } from "../../../http/discountRequest"
 import { DiscountBarCard } from "../DiscountBarCard/DiscountBarCard"
 interface IDiscountListing{
   setDiscountModal:Function
+  discountModal:boolean
 }
 
-export const DiscountListing:FC<IDiscountListing> = ({setDiscountModal}) => {
+export const DiscountListing:FC<IDiscountListing> = ({setDiscountModal,discountModal}) => {
   
     const [discounts,setDiscounts]=useState<IDiscount[]>([])
     const getDiscounts=async()=>{
@@ -17,7 +18,7 @@ export const DiscountListing:FC<IDiscountListing> = ({setDiscountModal}) => {
     }
     useEffect(()=>{
         getDiscounts()
-    },[])
+    },[discountModal])
 
   return (
     <div className={styles.mainContainer}>
@@ -31,7 +32,7 @@ export const DiscountListing:FC<IDiscountListing> = ({setDiscountModal}) => {
             </div>
             <div className={styles.categoriesContainer}>
                 {discounts.map((el)=>(
-                    <DiscountBarCard key={el.id} discount={el}/>
+                    <DiscountBarCard key={el.id} discount={el} setDiscountModal={setDiscountModal}/>
                 ))}
             </div>
         </div>

@@ -18,7 +18,7 @@ export const Products = () => {
       </div>
       <div className={styles.contentContainer}>
         <Sidebar />
-        <ProductListing setProductModal={setProductModal} />
+        <ProductListing setProductModal={setProductModal} productModal={productModal}/>
       </div>
     </div>
   )

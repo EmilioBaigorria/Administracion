@@ -4,6 +4,7 @@ import { ICategories } from "../../../types/ICategories"
 import { Button } from "../../ui/Button/Button"
 import { createCategorie, updateCategorie } from "../../../http/categorieRequest"
 import { useCategorieStore } from "../../../store/categorieStore"
+import Swal from "sweetalert2"
 const initialValues: ICategories = {
     id: 0,
     nombre: ""
@@ -32,6 +33,13 @@ export const ModalCreateEditeCategorie: FC<IModalCreateEditeCategorie> = ({ isOp
         if(activeCategorie){
             const response=await updateCategorie(workingCategorie)
             if(response){
+                Swal.fire({
+                    position: "center-end",
+                    icon: "success",
+                    title: "Categoria Actualizada",
+                    showConfirmButton: false,
+                timer: 1500
+                });
                 handleClose()
             }
         }else{
@@ -40,6 +48,13 @@ export const ModalCreateEditeCategorie: FC<IModalCreateEditeCategorie> = ({ isOp
             }
             const response=await createCategorie(newCategorie)
             if(response){
+                Swal.fire({
+                    position: "center-end",
+                    icon: "success",
+                    title: "Categoria Creada",
+                    showConfirmButton: false,
+                timer: 1500
+                });
                 handleClose()
             }
         }

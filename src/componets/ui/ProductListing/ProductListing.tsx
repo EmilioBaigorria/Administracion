@@ -6,8 +6,9 @@ import { ProductBarCard } from "../ProductBarCard/ProductBarCard"
 import { getAllProducts } from "../../../http/productRequest"
 interface IProductListing {
     setProductModal: Function,
+    productModal:boolean
 }
-export const ProductListing: FC<IProductListing> = ({ setProductModal }) => {
+export const ProductListing: FC<IProductListing> = ({ setProductModal,productModal }) => {
     const [products, setProducts] = useState<IProduct[]>([])
     const getProducts=async ()=>{
         const productsData=await getAllProducts()
@@ -15,7 +16,7 @@ export const ProductListing: FC<IProductListing> = ({ setProductModal }) => {
     }
     useEffect(() => {
         getProducts()
-    }, [])
+    }, [productModal])
     return (
         <div className={styles.mainContainer}>
             <div className={styles.headerContainer}>
