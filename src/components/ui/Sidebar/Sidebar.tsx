@@ -11,6 +11,7 @@ export const Sidebar = () => {
             <Button text="Categorias" action={()=>{navigate("/categories")}}/>
             <Button text="Talles" action={()=>{navigate("/talles")}}/>
             <Button text="Descuentos" action={()=>{navigate("/descuento")}}/>
+            <Button text="Usuarios" action={()=>{navigate("/usuario")}}/>
         </div>
     </div>
   )

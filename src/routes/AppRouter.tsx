@@ -5,6 +5,7 @@ import { Discounts } from '../components/screens/Discounts/Discounts'
 import { Login } from '../components/screens/Login/Login'
 import { Products } from '../components/screens/Products/Products'
 import { Sizes } from '../components/screens/Sizes/Sizes'
+import { Users } from '../components/screens/Users/Users'
 
 export const AppRouter = () => {
   return (
@@ -24,6 +25,9 @@ export const AppRouter = () => {
             }/>
             <Route path='/descuento' element={
               <Discounts/>
+            }/>
+            <Route path='/usuario' element={
+              <Users/>
             }/>
              <Route path='*' element={
               <div>Error 404 not found</div>

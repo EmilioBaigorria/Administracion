@@ -50,7 +50,7 @@ export const updateUser=async(updatedUser:IUser)=>{
         console.log("Ocurrio un error durante la actualizacion de un usuario: ",error)
     }
 }
-export const deleteUser=async(id:string)=>{
+export const deleteUserById=async(id:string)=>{
     try {
         const response=await axios.delete(`${baseURL}/${id}`,{headers:{"Authorization":`Bearer ${getLocalToken()}`}})
         if(response){
