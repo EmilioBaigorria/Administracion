@@ -1,10 +1,10 @@
 import { FC } from "react"
+import Swal from "sweetalert2"
+import { deleteCategorieById } from "../../../http/categorieRequest"
+import { useCategorieStore } from "../../../store/categorieStore"
 import { ICategories } from "../../../types/ICategories"
 import { Button } from "../Button/Button"
 import styles from "./CategorieBarCard.module.css"
-import { deleteCategorieById } from "../../../http/categorieRequest"
-import Swal from "sweetalert2"
-import { useCategorieStore } from "../../../store/categorieStore"
 interface ICategorieBarCard {
     categorie: ICategories
     setCategorieModal:Function
@@ -39,7 +39,7 @@ export const CategorieBarCard: FC<ICategorieBarCard> = ({ categorie,setCategorie
     return (
         <div className={styles.mainContainer}>
             <div className={styles.infoContainer}>
-                <p>Nombre:{categorie.nombre}</p>
+                <p><b>Nombre:</b> {categorie.nombre}</p>
             </div>
             <div className={styles.buttonsContainer}>
                 <Button icon={

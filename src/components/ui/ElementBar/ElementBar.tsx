@@ -1,7 +1,6 @@
 import { FC } from "react"
-import { Button } from "../Button/Button"
-import styles from "./ElementBar.module.css"
 import { IProduct } from "../../../types/IProduct"
+import { Button } from "../Button/Button"
 interface IElementBar {
   fields: string[]
   produtct?: IProduct

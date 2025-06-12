@@ -1,9 +1,9 @@
 import { FC, useEffect, useState } from 'react'
-import styles from "./CategorieListing.module.css"
-import { Button } from '../Button/Button'
-import { ICategories } from '../../../types/ICategories'
-import { CategorieBarCard } from '../CategorieBarCard/CategorieBarCard'
 import { getAllCategories } from '../../../http/categorieRequest'
+import { ICategories } from '../../../types/ICategories'
+import { Button } from '../Button/Button'
+import { CategorieBarCard } from '../CategorieBarCard/CategorieBarCard'
+import styles from "./CategorieListing.module.css"
 
 
 //const initialValues:ICategories[]=[{nombre:"Urbano",id:11},{nombre:"Hombre",id:12}]
@@ -26,10 +26,10 @@ export const CategorieListing:FC<ICategorieListing> = ({setCategorieModal,catego
     <div className={styles.mainContainer}>
             <div className={styles.headerContainer}>
                 <div className={styles.headerContainer_text}>
-                    <p>Categorias</p>
+                    <p>Categorías</p>
                 </div>
                 <div>
-                    <Button text="Agregar Categoria" action={()=>setCategorieModal(true)} styleSet={false} />
+                    <Button text="Agregar Categoría" action={()=>setCategorieModal(true)} styleSet={false} />
                 </div>
             </div>
             <div className={styles.categoriesContainer}>

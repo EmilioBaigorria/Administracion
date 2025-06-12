@@ -1,10 +1,10 @@
 
 import { BrowserRouter, Route, Routes } from 'react-router'
-import { Products } from '../componets/screens/Products/Products'
-import { Categories } from '../componets/screens/Categories/Categories'
-import { Login } from '../componets/screens/Login/Login'
-import { Sizes } from '../componets/screens/Sizes/Sizes'
-import { Discounts } from '../componets/screens/Discounts/Discounts'
+import { Categories } from '../components/screens/Categories/Categories'
+import { Discounts } from '../components/screens/Discounts/Discounts'
+import { Login } from '../components/screens/Login/Login'
+import { Products } from '../components/screens/Products/Products'
+import { Sizes } from '../components/screens/Sizes/Sizes'
 
 export const AppRouter = () => {
   return (

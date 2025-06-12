@@ -1,11 +1,10 @@
-import styles from "./DiscountBarCard.module.css"
-import { Button } from '../Button/Button'
-import { IDiscount } from "../../../types/IDiscount"
 import { FC } from "react"
 import Swal from "sweetalert2"
 import { deleteDiscountById } from "../../../http/discountRequest"
-import { useCategorieStore } from "../../../store/categorieStore"
 import { useDiscountStore } from "../../../store/discountStore"
+import { IDiscount } from "../../../types/IDiscount"
+import { Button } from '../Button/Button'
+import styles from "./DiscountBarCard.module.css"
 
 
 interface IDiscountBarCard {
@@ -42,9 +41,9 @@ export const DiscountBarCard:FC<IDiscountBarCard> = ({discount,setDiscountModal}
   return (
         <div className={styles.mainContainer}>
             <div className={styles.infoContainer}>
-                <p>Porcentaje:{discount.descuento}</p>
-                <p>Inicia:{new Date(discount.fechaInicio.toString()).toLocaleDateString()}</p>
-                <p>Termina:{new Date(discount.fechaCierre.toString()).toLocaleDateString()}</p>
+                <p><b>Porcentaje:</b> {discount.descuento}</p>
+                <p><b>Inicia:</b> {new Date(discount.fechaInicio.toString()).toLocaleDateString()}</p>
+                <p><b>Termina:</b> {new Date(discount.fechaCierre.toString()).toLocaleDateString()}</p>
             </div>
             <div className={styles.buttonsContainer}>
                 <Button icon={

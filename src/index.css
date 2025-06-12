@@ -1,12 +1,25 @@
-*{
-    margin: 0;
-    font-size: 1.42rem;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Montserrat:wght@600;700&family=Poppins:wght@400;600&display=swap');
+
+:root {
+  --font-title: 'Montserrat', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-ui: 'Poppins', sans-serif;
 }
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+  background-color: #fff;
+  color: #141414;
+}
+
 /* Chrome, Edge and Safari */
 *::-webkit-scrollbar {
   height: 6px;
   width: 6px;
 }
+
 *::-webkit-scrollbar-track {
   border-radius: 3px;
   background-color: #BDBDBD;
@@ -23,11 +36,11 @@
 
 *::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  background-color: #000000;
+  background-color: #383838;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background-color: #545454;
+  background-color: #777777;
 }
 
 *::-webkit-scrollbar-thumb:active {

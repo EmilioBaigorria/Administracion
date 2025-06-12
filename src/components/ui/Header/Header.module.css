@@ -1,11 +1,14 @@
 .mainHeaderContainer{
-    color: white;
+    margin-top: -2vh;
+    color: #141414;
     width: 100vw;
-    background-color: #141414;
-    height: 100%;
+    background-color: #fff;
+    height: auto;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 3rem;
+    align-items: center;
 }
 .userManagmentContainer{
     margin-right: 1rem;

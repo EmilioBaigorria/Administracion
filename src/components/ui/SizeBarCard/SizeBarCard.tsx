@@ -1,10 +1,10 @@
 import { FC } from "react"
-import { ISize } from "../../../types/ISize"
-import { Button } from "../Button/Button"
-import styles from "./SizeBarCard.module.css"
 import Swal from "sweetalert2"
 import { deleteSizeById } from "../../../http/sizeRequest"
 import { useSizeStore } from "../../../store/sizeStore"
+import { ISize } from "../../../types/ISize"
+import { Button } from "../Button/Button"
+import styles from "./SizeBarCard.module.css"
 interface ISizeBarCard{
     size:ISize
     setSizeModal:Function
@@ -38,7 +38,7 @@ export const SizeBarCard:FC<ISizeBarCard> = ({ size,setSizeModal }) => {
     return (
         <div className={styles.mainContainer}>
             <div className={styles.infoContainer}>
-                <p>Nombre:{size.talle}</p>
+                <p><b>Nombre:</b> {size.talle}</p>
 
             </div>
             <div className={styles.buttonsContainer}>
