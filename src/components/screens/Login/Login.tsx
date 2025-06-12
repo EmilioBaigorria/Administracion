@@ -57,7 +57,6 @@ export const Login = () => {
   };
 
   useEffect(() => {
-    localStorage.clear()
     const token = localStorage.getItem('token')
     if (token && !tokenIsExpired(token)) {
       navigate("/products")
