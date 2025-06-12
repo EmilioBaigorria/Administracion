@@ -7,7 +7,6 @@ import { useUserStore } from "../../../store/userStore"
 import { ILoginBody } from "../../../types/ILoginBody"
 import { IUser, ROLE } from "../../../types/IUser"
 import { Button } from "../../ui/Button/Button"
-import { Header } from '../../ui/Header/Header'
 import styles from "./Login.module.css"
 
 
@@ -44,7 +43,7 @@ export const Login = () => {
     setErrorMessage("Contraseña o Email invalidos")
   }
 
-  const setLoggedUser = async (email: string): Promise<string|ROLE> => {
+  const setLoggedUser = async (email: string): Promise<string | ROLE> => {
     const users: IUser[] = await getAllUsers();
     const user = users.find(user => user.email === email);
 
@@ -70,13 +69,14 @@ export const Login = () => {
 
   return (
     <div className={styles.mainContainer}>
-      <div className={styles.headerContainer}>
-        <Header />
-      </div>
+      <img style={{height: "12%", gap: "1rem"}}
+        src="https://res.cloudinary.com/danzaburou/image/upload/v1749489285/vetra_banner_wflubd.png"
+        alt="Vetra"
+      />
       <div className={styles.contentContainer}>
         <div className={styles.logInComponent}>
           <div className={styles.logInComponent_header}>
-            Inicio de Sesion
+            ADMINISTRACIÓN - Inicio de Sesión
           </div>
           <div className={styles.logInComponent_content}>
             {errorMessage !== "" ? <div className={styles.errorMessage}>{errorMessage}</div> : <div></div>}
@@ -91,7 +91,7 @@ export const Login = () => {
               </div>
             </div>
             <div className={styles.logInComponent_content_button}>
-              <Button text="Iniciar Sesion" action={handleLogin} styleSet={false} />
+              <Button text="INICIAR SESIÓN" action={handleLogin} styleSet={false} />
             </div>
           </div>
         </div>

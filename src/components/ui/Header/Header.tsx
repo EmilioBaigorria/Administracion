@@ -9,7 +9,7 @@ export const Header = () => {
             <img className={styles.img} src="../../../assets/vetra_logo.svg"/> <strong style={{fontSize:"larger"}}>ADMINISTRACIÓN</strong>
         </div>
         <div className={styles.userManagmentContainer}>
-            <p>Cuenta admin:{user}</p>
+            <p>Logueado como: {user}</p>
         </div>
     </div>
   )
