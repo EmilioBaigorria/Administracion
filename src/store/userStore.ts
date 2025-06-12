@@ -9,6 +9,6 @@ interface IUserStore {
 
 export const useUserStore = create<IUserStore>((set) => ({
     actireUser: null,
-    setActiveUser: (product) => set(() => ({ actireUser: product })),
+    setActiveUser: (user) => set(() => ({ actireUser: user })),
     deleteUser: () => set(() => ({ actireUser: null })),
 }));

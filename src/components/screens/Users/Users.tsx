@@ -1,23 +1,20 @@
 import { useEffect, useState } from "react"
-import { ModalCrearEditarProducto } from "../../modals/ModalCrearEditarProducto/ModalCrearEditarProducto"
+import { ModalCreateEditUser } from "../../modals/ModalCreateEditUser/ModalCreateEditUser"
 import { Header } from "../../ui/Header/Header"
-import { ProductListing } from "../../ui/ProductListing/ProductListing"
 import { Sidebar } from "../../ui/Sidebar/Sidebar"
-import styles from "./Products.module.css"
+import styles from "./Users.module.css"
+import { UserListing } from "../../ui/UserListing/UserListing"
 import { useUserStore } from "../../../store/userStore"
-import { getAllUsers } from "../../../http/userRequest"
 import { IUser } from "../../../types/IUser"
+import { getAllUsers } from "../../../http/userRequest"
 import { useNavigate } from "react-router"
-import { tokenIsExpired } from "../../../services/jwtService"
 import { refreshToken } from "../../../services/tokenService"
+import { tokenIsExpired } from "../../../services/jwtService"
 
-
-
-export const Products = () => {
+export const Users = () => {
+  const [userModal,setUserModal]=useState(false)
 
   const navigate=useNavigate()
-
-  const [productModal, setProductModal] = useState(false)
 
   const setActiveUser=useUserStore((state)=>state.setActiveUser)
   
@@ -40,14 +37,13 @@ export const Products = () => {
       },[])
   return (
     <div className={styles.mainContainer}>
-      <ModalCrearEditarProducto isOpen={productModal} onClose={() => setProductModal(false)} />
+      <ModalCreateEditUser isOpen={userModal} onClose={()=>setUserModal(false)}/>
       <div className={styles.headerContainer}>
         <Header />
-        
       </div>
       <div className={styles.contentContainer}>
         <Sidebar />
-        <ProductListing setProductModal={setProductModal} productModal={productModal}/>
+        <UserListing userModal={userModal} setUserModal={setUserModal}/>
       </div>
     </div>
   )

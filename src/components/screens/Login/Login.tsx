@@ -48,6 +48,7 @@ export const Login = () => {
     const user = users.find(user => user.email === email);
 
     if (user) {
+      localStorage.setItem('userId',user.id!.toString())
       setActiveUser(user);
       return user.rol;
     }

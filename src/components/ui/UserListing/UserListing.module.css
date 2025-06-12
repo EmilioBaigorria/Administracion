@@ -1,0 +1,36 @@
+.mainContainer {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Inter', sans-serif;
+}
+
+.headerContainer {
+    height: 60px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.headerContainer_text {
+    color: #141414;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.contentContainer {
+    display: flex;
+    flex: 1;
+    height: calc(100vh - 60px); /* 60px es la altura del header */
+    overflow: hidden;
+}
+
+.categoriesContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
