@@ -1,12 +1,12 @@
-import Select, { StylesConfig } from "react-select"
-import styles from "./ModalCreateEditUser.module.css"
 import { ChangeEvent, FC, useEffect, useState } from "react";
-import { IUser, ROLE } from "../../../types/IUser";
-import { createUser, updateUser } from "../../../http/userRequest";
+import Select, { StylesConfig } from "react-select";
 import Swal from "sweetalert2";
-import { Button } from "../../ui/Button/Button";
+import { createUser, updateUser } from "../../../http/userRequest";
 import { useModalUserStore } from "../../../store/modalUserStore";
 import { IAdress } from "../../../types/IAdress";
+import { IUser, ROLE } from "../../../types/IUser";
+import { Button } from "../../ui/Button/Button";
+import styles from "./ModalCreateEditUser.module.css";
 
 
 type OptionType = {
@@ -88,24 +88,24 @@ const customStyles: StylesConfig<OptionType, true> = {
         zIndex: 9999,
     }),
 };
-interface ICreateUser{
-  id?:string,
-  nombre:string
-  apellido:string
-  email:string
-  password:string
-  confirmPassword:string
-  rol:string |ROLE
-  direcciones:IAdress[]
+interface ICreateUser {
+    id?: string,
+    nombre: string
+    apellido: string
+    email: string
+    password: string
+    confirmPassword: string
+    rol: string | ROLE
+    direcciones: IAdress[]
 }
-const initialValues:ICreateUser={
-  nombre:"",
-  apellido:"",
-  email:"",
-  password:"",
-  confirmPassword:"",
-  rol:"",
-  direcciones:[]
+const initialValues: ICreateUser = {
+    nombre: "",
+    apellido: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    rol: "",
+    direcciones: []
 
 }
 interface IModalCreateEditUser {
@@ -113,18 +113,18 @@ interface IModalCreateEditUser {
     onClose: Function
 }
 
-export const ModalCreateEditUser:FC<IModalCreateEditUser> = ({isOpen,onClose}) => {
+export const ModalCreateEditUser: FC<IModalCreateEditUser> = ({ isOpen, onClose }) => {
 
-  const activeUser=useModalUserStore((state)=>state.modalUser)
-  const removeUser=useModalUserStore((state)=>state.deleteModalUser)
+    const activeUser = useModalUserStore((state) => state.modalUser)
+    const removeUser = useModalUserStore((state) => state.deleteModalUser)
 
-  const [workingUser, setWorkingUser] = useState<ICreateUser>(initialValues)
+    const [workingUser, setWorkingUser] = useState<ICreateUser>(initialValues)
 
-  const [selectedRole, setSelectedRole] = useState<OptionType>({ value: "USUARIO", label: "Usuario" })
+    const [selectedRole, setSelectedRole] = useState<OptionType>({ value: "USUARIO", label: "Usuario" })
 
-  const [errorMessage,setErrorMessage]=useState<string>("")
+    const [errorMessage, setErrorMessage] = useState<string>("")
 
-  const [hidePass,setHidePass]=useState<boolean>(true)
+    const [hidePass, setHidePass] = useState<boolean>(true)
 
 
 
@@ -134,49 +134,49 @@ export const ModalCreateEditUser:FC<IModalCreateEditUser> = ({isOpen,onClose}) =
     }
 
     const handleSave = async () => {
-      if(workingUser.password!=workingUser.confirmPassword){
-        setErrorMessage("Las contraseñas deben coincidir")
-        return
-      }
-      if(activeUser){
-        const updatedUser: IUser = {
-          id:activeUser.id,
-          nombre:workingUser.nombre,
-          apellido:workingUser.apellido,
-          email:workingUser.email,
-          password:activeUser.password,
-          rol:selectedRole?.value,
-          direcciones:activeUser.direcciones
+        if (workingUser.password != workingUser.confirmPassword) {
+            setErrorMessage("Las contraseñas deben coincidir")
+            return
         }
-        await updateUser(updatedUser)
-        Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Usuario creado",
-            showConfirmButton: false,
-            timer: 1500
+        if (activeUser) {
+            const updatedUser: IUser = {
+                id: activeUser.id,
+                nombre: workingUser.nombre,
+                apellido: workingUser.apellido,
+                email: workingUser.email,
+                password: activeUser.password,
+                rol: selectedRole?.value,
+                direcciones: activeUser.direcciones
+            }
+            await updateUser(updatedUser)
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Usuario actualizado",
+                showConfirmButton: false,
+                timer: 1500
             });
-        handleClose()
-      }else{
-        const newUser: IUser = {
-            nombre:workingUser.nombre,
-            apellido:workingUser.apellido,
-            email:workingUser.email,
-            password:workingUser.password,
-            rol:selectedRole?.value,
-            direcciones:[]
+            handleClose()
+        } else {
+            const newUser: IUser = {
+                nombre: workingUser.nombre,
+                apellido: workingUser.apellido,
+                email: workingUser.email,
+                password: workingUser.password,
+                rol: selectedRole?.value,
+                direcciones: []
+            }
+            await createUser(newUser)
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Usuario creado",
+                showConfirmButton: false,
+                timer: 1500
+            });
+            handleClose()
+
         }
-        await createUser(newUser)
-        Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Usuario creado",
-            showConfirmButton: false,
-            timer: 1500
-            });
-        handleClose()
-        
-      }
 
     }
 
@@ -187,20 +187,20 @@ export const ModalCreateEditUser:FC<IModalCreateEditUser> = ({isOpen,onClose}) =
     }
 
     useEffect(() => {
-      if(activeUser){
-        let parsedWorkingUser:ICreateUser={
-          id:activeUser.id?.toString(),
-          nombre:activeUser.nombre,
-          apellido:activeUser.apellido,
-          email:activeUser.email,
-          password:activeUser.password,
-          confirmPassword:activeUser.password,
-          rol:activeUser.rol,
-          direcciones:activeUser.direcciones
+        if (activeUser) {
+            let parsedWorkingUser: ICreateUser = {
+                id: activeUser.id?.toString(),
+                nombre: activeUser.nombre,
+                apellido: activeUser.apellido,
+                email: activeUser.email,
+                password: activeUser.password,
+                confirmPassword: activeUser.password,
+                rol: activeUser.rol,
+                direcciones: activeUser.direcciones
+            }
+            setSelectedRole(activeUser.rol == "ADMIN" ? { value: "ADMIN", label: "Administrador" } : { value: "USUARIO", label: "Usuario" })
+            setWorkingUser(parsedWorkingUser)
         }
-        setSelectedRole(activeUser.rol=="ADMIN"?{ value: "ADMIN", label: "Administrador" }:{ value: "USUARIO", label: "Usuario" })
-        setWorkingUser(parsedWorkingUser)
-      }
     }, [activeUser])
     return (
         <div className={styles.background} style={{ display: isOpen ? "" : "none" }}>
@@ -210,7 +210,7 @@ export const ModalCreateEditUser:FC<IModalCreateEditUser> = ({isOpen,onClose}) =
                     <div className={styles.header_X} onClick={handleClose}>✖</div>
                 </div>
                 <div className={styles.mainContentContainer}>
-                    {errorMessage!=""?<p className={styles.errorMessage}>{errorMessage}</p>:<div></div>}
+                    {errorMessage != "" ? <p className={styles.errorMessage}>{errorMessage}</p> : <div></div>}
                     <div className={styles.inputsContainer}>
                         <div className={styles.inputsContainer_inputContainer}>
                             <p className={styles.inputsContainer_inputContainer_label}>Nombre:</p>
@@ -236,38 +236,38 @@ export const ModalCreateEditUser:FC<IModalCreateEditUser> = ({isOpen,onClose}) =
                                 onChange={(newValues) => setSelectedRole(newValues)}
                             />
                         </div>
-                        {workingUser.id?<div></div>:
-                        <div className={styles.inputsContainer_inputContainer}>
-                            <p className={styles.inputsContainer_inputContainer_label}>Contraseña:</p>
-                            <input className={styles.inputsContainer_inputContainer_input} type={hidePass?"password":"text"}
-                                name="password" value={workingUser.password} onChange={handleChangeInputs} />
-                            <Button icon={hidePass?
-                                <span className="material-symbols-outlined">
-                                visibility_off
-                                </span>:
-                                <span className="material-symbols-outlined">
-                                visibility
-                                </span>
-                            } action={()=>setHidePass(!hidePass)} styleSet={false} />
-                        </div>}
-                        {workingUser.id?<div></div>:
-                        <div className={styles.inputsContainer_inputContainer}>
-                            <p className={styles.inputsContainer_inputContainer_label}>Confirma contraseña:</p>
-                            <input className={styles.inputsContainer_inputContainer_input} type={hidePass?"password":"text"}
-                                name="confirmPassword" value={workingUser.confirmPassword} onChange={handleChangeInputs} />
-                            <Button icon={hidePass?
-                                <span className="material-symbols-outlined">
-                                visibility_off
-                                </span>:
-                                <span className="material-symbols-outlined">
-                                visibility
-                                </span>
-                            } action={()=>setHidePass(!hidePass)} styleSet={false} />
-                        </div>}
+                        {workingUser.id ? <div></div> :
+                            <div className={styles.inputsContainer_inputContainer}>
+                                <p className={styles.inputsContainer_inputContainer_label}>Contraseña:</p>
+                                <input className={styles.inputsContainer_inputContainer_input} type={hidePass ? "password" : "text"}
+                                    name="password" value={workingUser.password} onChange={handleChangeInputs} />
+                                <Button icon={hidePass ?
+                                    <span className="material-symbols-outlined">
+                                        visibility_off
+                                    </span> :
+                                    <span className="material-symbols-outlined">
+                                        visibility
+                                    </span>
+                                } action={() => setHidePass(!hidePass)} styleSet={false} />
+                            </div>}
+                        {workingUser.id ? <div></div> :
+                            <div className={styles.inputsContainer_inputContainer}>
+                                <p className={styles.inputsContainer_inputContainer_label}>Confirma contraseña:</p>
+                                <input className={styles.inputsContainer_inputContainer_input} type={hidePass ? "password" : "text"}
+                                    name="confirmPassword" value={workingUser.confirmPassword} onChange={handleChangeInputs} />
+                                <Button icon={hidePass ?
+                                    <span className="material-symbols-outlined">
+                                        visibility_off
+                                    </span> :
+                                    <span className="material-symbols-outlined">
+                                        visibility
+                                    </span>
+                                } action={() => setHidePass(!hidePass)} styleSet={false} />
+                            </div>}
                     </div>
                     <div className={styles.bottomButtonsContaner}>
                         <Button text="Cancelar" action={handleClose} styleSet={false} />
-                        <Button text={workingUser.id?"Editar":"Crear"} action={handleSave} styleSet={false} />
+                        <Button text={workingUser.id ? "Editar" : "Crear"} action={handleSave} styleSet={false} />
                     </div>
                 </div>
             </div>

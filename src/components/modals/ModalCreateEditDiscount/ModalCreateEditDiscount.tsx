@@ -1,10 +1,10 @@
 import { ChangeEvent, FC, useEffect, useState } from "react"
-import { IDiscount } from "../../../types/IDiscount"
-import styles from "./ModalCreateEditDiscount.module.css"
-import { createDiscount, updateDiscount } from "../../../http/discountRequest"
-import { Button } from "../../ui/Button/Button"
-import { useDiscountStore } from "../../../store/discountStore"
 import Swal from "sweetalert2"
+import { createDiscount, updateDiscount } from "../../../http/discountRequest"
+import { useDiscountStore } from "../../../store/discountStore"
+import { IDiscount } from "../../../types/IDiscount"
+import { Button } from "../../ui/Button/Button"
+import styles from "./ModalCreateEditDiscount.module.css"
 interface ICreateDiscount{
     fechaCierre:string,
     fechaInicio:string
@@ -50,7 +50,7 @@ export const ModalCreateEditDiscount:FC<IModalCreateEditeDiscount> = ({isOpen,on
                 Swal.fire({
                 position: "top-end",
                 icon: "success",
-                title: "Descuento Actualizado",
+                title: "Descuento actualizado",
                 showConfirmButton: false,
                 timer: 1500
                 });
@@ -68,7 +68,7 @@ export const ModalCreateEditDiscount:FC<IModalCreateEditeDiscount> = ({isOpen,on
                 Swal.fire({
                 position: "top-end",
                 icon: "success",
-                title: "Descuento Creado",
+                title: "Descuento creado",
                 showConfirmButton: false,
                 timer: 1500
                 });

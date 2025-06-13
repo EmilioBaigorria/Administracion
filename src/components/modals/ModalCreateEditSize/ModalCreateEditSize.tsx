@@ -1,10 +1,10 @@
 import { ChangeEvent, FC, useEffect, useState } from "react"
+import Swal from "sweetalert2"
+import { createSize, updateSize } from "../../../http/sizeRequest"
+import { useSizeStore } from "../../../store/sizeStore"
 import { ISize } from "../../../types/ISize"
 import { Button } from "../../ui/Button/Button"
 import styles from "./ModalCreateEditSize.module.css"
-import { createSize, updateSize } from "../../../http/sizeRequest"
-import { useSizeStore } from "../../../store/sizeStore"
-import Swal from "sweetalert2"
 
 const initialValues: ISize = {
     talle:""
@@ -37,7 +37,7 @@ export const ModalCreateEditSize:FC<IModalCreateEditeSize> = ({isOpen,onClose}) 
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
-                    title: "Talle Actualizada",
+                    title: "Talle actualizado",
                     showConfirmButton: false,
                     timer: 1500
                 });
@@ -52,7 +52,7 @@ export const ModalCreateEditSize:FC<IModalCreateEditeSize> = ({isOpen,onClose}) 
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
-                    title: "Talle Creada",
+                    title: "Talle creado",
                     showConfirmButton: false,
                     timer: 1500
                 });

@@ -1,18 +1,17 @@
 import { ChangeEvent, FC, useEffect, useState } from "react"
-import styles from "./ModalCrearEditarProducto.tsx.module.css"
-import { IProduct } from "../../../types/IProduct"
-import Select, { StylesConfig } from "react-select"
-import { MultiValue } from "react-select"
-import { Button } from "../../ui/Button/Button"
-import { uploadImageToCloudinary } from "../../../http/imageRequest"
-import { getAllCategories, getCategoriesById } from "../../../http/categorieRequest"
-import { ICategories } from "../../../types/ICategories"
-import { ISize } from "../../../types/ISize"
-import { getAllSizes, getSizeById } from "../../../http/sizeRequest"
-import { IDiscount } from "../../../types/IDiscount"
-import { getAllDiscounts, getDiscountById } from "../../../http/discountRequest"
-import { createProduct } from "../../../http/productRequest"
+import Select, { MultiValue, StylesConfig } from "react-select"
 import Swal from "sweetalert2"
+import { getAllCategories, getCategoriesById } from "../../../http/categorieRequest"
+import { getAllDiscounts, getDiscountById } from "../../../http/discountRequest"
+import { uploadImageToCloudinary } from "../../../http/imageRequest"
+import { createProduct } from "../../../http/productRequest"
+import { getAllSizes, getSizeById } from "../../../http/sizeRequest"
+import { ICategories } from "../../../types/ICategories"
+import { IDiscount } from "../../../types/IDiscount"
+import { IProduct } from "../../../types/IProduct"
+import { ISize } from "../../../types/ISize"
+import { Button } from "../../ui/Button/Button"
+import styles from "./ModalCrearEditarProducto.tsx.module.css"
 const initialValues: IProduct = {
     id: 0,
     nombre: "",
@@ -240,12 +239,12 @@ export const ModalCrearEditarProducto: FC<IModalCrearEditarProducto> = ({ isOpen
                 <div className={styles.mainContentContainer}>
                     <div className={styles.inputsContainer}>
                         <div className={styles.inputsContainer_inputContainer}>
-                            <p className={styles.inputsContainer_inputContainer_label}>Nombre:</p>
+                            <p className={styles.inputsContainer_inputContainer_label}>Nombre: </p>
                             <input className={styles.inputsContainer_inputContainer_input} type="text"
                                 name="nombre" value={workingProduct.nombre} onChange={handleChangeInputs} />
                         </div>
                         <div className={styles.inputsContainer_inputContainer}>
-                            <p className={styles.inputsContainer_inputContainer_label}>Categorias:</p>
+                            <p className={styles.inputsContainer_inputContainer_label}>Categorías: </p>
                             <Select
                                 className={styles.dropdown}
                                 styles={customStyles}
@@ -256,12 +255,12 @@ export const ModalCrearEditarProducto: FC<IModalCrearEditarProducto> = ({ isOpen
                             />
                         </div>
                         <div className={styles.inputsContainer_inputContainer}>
-                            <p className={styles.inputsContainer_inputContainer_label}>Descripcion:</p>
+                            <p className={styles.inputsContainer_inputContainer_label}>Descripción: </p>
                             <input className={styles.inputsContainer_inputContainer_input} type="text"
                                 name="descripcion" value={workingProduct.descripcion} onChange={handleChangeInputs} />
                         </div>
                         <div className={styles.inputsContainer_inputContainer}>
-                            <p className={styles.inputsContainer_inputContainer_label}>Talle:</p>
+                            <p className={styles.inputsContainer_inputContainer_label}>Talle: </p>
                             <Select className={styles.dropdown}
                                 styles={customStyles}
                                 options={sizesOptions}
@@ -271,7 +270,7 @@ export const ModalCrearEditarProducto: FC<IModalCrearEditarProducto> = ({ isOpen
                             />
                         </div>
                         <div className={styles.inputsContainer_inputContainer}>
-                            <p className={styles.inputsContainer_inputContainer_label}>Precio:</p>
+                            <p className={styles.inputsContainer_inputContainer_label}>Precio: </p>
                             <input className={styles.inputsContainer_inputContainer_input} type="text"
                                 name="precio" value={workingProduct.precio} onChange={handleChangeInputs} />
                         </div>
@@ -281,7 +280,7 @@ export const ModalCrearEditarProducto: FC<IModalCrearEditarProducto> = ({ isOpen
                                 name="stock" value={workingProduct.stock} onChange={handleChangeInputs} />
                         </div>
                         <div className={styles.inputsContainer_inputContainer}>
-                            <p className={styles.inputsContainer_inputContainer_label}>Color:</p>
+                            <p className={styles.inputsContainer_inputContainer_label}>Color: </p>
                             <Select className={styles.dropdown}
                                 styles={customStyles}
                                 options={colors}
@@ -299,7 +298,7 @@ export const ModalCrearEditarProducto: FC<IModalCrearEditarProducto> = ({ isOpen
                             />
                         </div>
                         <div className={styles.inputsContainer_inputContainer}>
-                            <p className={styles.inputsContainer_inputContainer_label}>Imagen:</p>
+                            <p className={styles.inputsContainer_inputContainer_label}>Imagen: </p>
                             <div className={styles.inputsContainer_inputContainer_uploadImageContainer}>
                                 <input className={styles.imageInput} type="file" accept="image/*" onChange={handleFileChange} />
                                 {imageUrl && (

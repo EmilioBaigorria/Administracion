@@ -23,6 +23,14 @@
     gap: 2rem;
 }
 
+.adminRole {
+    color: red;
+}
+
+.notAdmin {
+    color: #141414 ;
+}
+
 .buttonsContainer {
     display: flex;
     gap: 0.5rem;

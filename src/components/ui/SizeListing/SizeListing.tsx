@@ -1,22 +1,23 @@
 import { FC, useEffect, useState } from "react"
-import { Button } from "../Button/Button"
-import styles from "./SizeListing.module.css"
-import { ISize } from "../../../types/ISize"
 import { getAllSizes } from "../../../http/sizeRequest"
+import { ISize } from "../../../types/ISize"
+import { Button } from "../Button/Button"
 import { SizeBarCard } from "../SizeBarCard/SizeBarCard"
+import styles from "./SizeListing.module.css"
 interface ISizeListing {
-    setSizeModal:Function
-    sizeModal:boolean
+    setSizeModal: Function
+    sizeModal: boolean
 }
-export const SizeListing:FC<ISizeListing> = ({setSizeModal,sizeModal}) => {
+export const SizeListing: FC<ISizeListing> = ({ setSizeModal, sizeModal }) => {
     const [sizes, setsizes] = useState<ISize[]>([])
-    const getSizes=async ()=>{
-        const sizeData=await getAllSizes()
+    const [refresh, setRefresh] = useState<boolean>(false)
+    const getSizes = async () => {
+        const sizeData = await getAllSizes()
         setsizes(sizeData)
     }
     useEffect(() => {
         getSizes()
-    }, [sizeModal])
+    }, [sizeModal, refresh])
     return (
         <div className={styles.mainContainer}>
             <div className={styles.headerContainer}>
@@ -29,7 +30,7 @@ export const SizeListing:FC<ISizeListing> = ({setSizeModal,sizeModal}) => {
             </div>
             <div className={styles.productsContainer}>
                 {sizes.map((el, key) => (
-                    <SizeBarCard key={key} size={el} setSizeModal={setSizeModal}/>
+                    <SizeBarCard key={key} size={el} setSizeModal={setSizeModal} refresh={refresh} setRefresh={setRefresh} />
                 ))}
             </div>
         </div>

@@ -7,32 +7,35 @@ import { Button } from "../Button/Button"
 import styles from "./CategorieBarCard.module.css"
 interface ICategorieBarCard {
     categorie: ICategories
-    setCategorieModal:Function
+    setCategorieModal: Function
+    refresh: boolean
+    setRefresh: Function
 }
-export const CategorieBarCard: FC<ICategorieBarCard> = ({ categorie,setCategorieModal }) => {
+export const CategorieBarCard: FC<ICategorieBarCard> = ({ categorie, setCategorieModal, refresh, setRefresh }) => {
 
-    const setActiveCategorie=useCategorieStore((state)=>state.setActiveCategorie)
-    const handleDeleteCategorie=async()=>{
+    const setActiveCategorie = useCategorieStore((state) => state.setActiveCategorie)
+    const handleDeleteCategorie = async () => {
         Swal.fire({
             title: "¿Seguro?",
-            text: "Esta accion es irreversible",
+            text: "Esta acción es irreversible",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#d33",
             cancelButtonColor: "#3085d6",
-            cancelButtonText:"Cancelar",
+            cancelButtonText: "Cancelar",
             confirmButtonText: "Eliminar"
         }).then(async (result) => {
             if (result.isConfirmed) {
                 await deleteCategorieById(categorie.id!.toString())
                 Swal.fire({
-                title: "Categoria Eliminada",
-                icon: "success"
+                    title: "Categoría eliminada",
+                    icon: "success"
                 });
+                setRefresh(!refresh)
             }
         });
     }
-    const handleOpenEditModal=()=>{
+    const handleOpenEditModal = () => {
         setActiveCategorie(categorie)
         setCategorieModal(true)
     }

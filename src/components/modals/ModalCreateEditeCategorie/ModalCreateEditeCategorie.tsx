@@ -1,10 +1,10 @@
 import { ChangeEvent, FC, useEffect, useState } from "react"
-import styles from "./ModalCreateEditeCategorie.module.css"
-import { ICategories } from "../../../types/ICategories"
-import { Button } from "../../ui/Button/Button"
+import Swal from "sweetalert2"
 import { createCategorie, updateCategorie } from "../../../http/categorieRequest"
 import { useCategorieStore } from "../../../store/categorieStore"
-import Swal from "sweetalert2"
+import { ICategories } from "../../../types/ICategories"
+import { Button } from "../../ui/Button/Button"
+import styles from "./ModalCreateEditeCategorie.module.css"
 const initialValues: ICategories = {
     id: 0,
     nombre: ""
@@ -36,7 +36,7 @@ export const ModalCreateEditeCategorie: FC<IModalCreateEditeCategorie> = ({ isOp
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
-                    title: "Categoria Actualizada",
+                    title: "Categoría actualizada",
                     showConfirmButton: false,
                 timer: 1500
                 });
@@ -51,7 +51,7 @@ export const ModalCreateEditeCategorie: FC<IModalCreateEditeCategorie> = ({ isOp
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
-                    title: "Categoria Creada",
+                    title: "Categoría creada",
                     showConfirmButton: false,
                 timer: 1500
                 });
@@ -69,7 +69,7 @@ export const ModalCreateEditeCategorie: FC<IModalCreateEditeCategorie> = ({ isOp
         <div className={styles.background} style={{ display: isOpen ? "" : "none" }}>
             <div className={styles.mainContainer}>
                 <div className={styles.header}>
-                    <p>{workingCategorie.id ? "Editar categoria" : "Añadir Categoria"}</p>
+                    <p>{workingCategorie.id ? "Editar categoría" : "Añadir categoría"}</p>
                     <div className={styles.header_X} onClick={handleClose}>✖</div>
                 </div>
                 <div className={styles.mainContentContainer}>

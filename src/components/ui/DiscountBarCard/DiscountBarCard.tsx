@@ -9,36 +9,39 @@ import styles from "./DiscountBarCard.module.css"
 
 interface IDiscountBarCard {
     discount: IDiscount
-    setDiscountModal:Function
+    setDiscountModal: Function
+    refresh: boolean
+    setRefresh: Function
 }
 
-export const DiscountBarCard:FC<IDiscountBarCard> = ({discount,setDiscountModal}) => {
-    const setActiveDiscount=useDiscountStore((state)=>state.setActiveDiscount)
-    const handleDeleteDiscount=async()=>{
-            Swal.fire({
-                title: "¿Seguro?",
-                text: "Esta accion es irreversible",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#d33",
-                cancelButtonColor: "#3085d6",
-                cancelButtonText:"Cancelar",
-                confirmButtonText: "Eliminar"
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    await deleteDiscountById(discount.id!.toString())
-                    Swal.fire({
-                    title: "Descuento Eliminada",
+export const DiscountBarCard: FC<IDiscountBarCard> = ({ discount, setDiscountModal, refresh, setRefresh }) => {
+    const setActiveDiscount = useDiscountStore((state) => state.setActiveDiscount)
+    const handleDeleteDiscount = async () => {
+        Swal.fire({
+            title: "¿Seguro?",
+            text: "Esta acción es irreversible",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            cancelButtonText: "Cancelar",
+            confirmButtonText: "Eliminar"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await deleteDiscountById(discount.id!.toString())
+                Swal.fire({
+                    title: "Descuento eliminado",
                     icon: "success"
-                    });
-                }
-            });
-        }
-    const handleOpenEditModal=()=>{
+                });
+                setRefresh(!refresh)
+            }
+        });
+    }
+    const handleOpenEditModal = () => {
         setActiveDiscount(discount)
         setDiscountModal(true)
     }
-  return (
+    return (
         <div className={styles.mainContainer}>
             <div className={styles.infoContainer}>
                 <p><b>Porcentaje:</b> {discount.descuento}</p>

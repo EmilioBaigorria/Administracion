@@ -1,22 +1,23 @@
 import { FC, useEffect, useState } from "react"
-import styles from "./ProductListing.module.css"
+import { getAllProducts } from "../../../http/productRequest"
 import { IProduct } from "../../../types/IProduct"
 import { Button } from "../Button/Button"
 import { ProductBarCard } from "../ProductBarCard/ProductBarCard"
-import { getAllProducts } from "../../../http/productRequest"
+import styles from "./ProductListing.module.css"
 interface IProductListing {
     setProductModal: Function,
-    productModal:boolean
+    productModal: boolean
 }
-export const ProductListing: FC<IProductListing> = ({ setProductModal,productModal }) => {
+export const ProductListing: FC<IProductListing> = ({ setProductModal, productModal }) => {
     const [products, setProducts] = useState<IProduct[]>([])
-    const getProducts=async ()=>{
-        const productsData=await getAllProducts()
+    const [refresh, setRefresh] = useState<boolean>(false)
+    const getProducts = async () => {
+        const productsData = await getAllProducts()
         setProducts(productsData)
     }
     useEffect(() => {
         getProducts()
-    }, [productModal])
+    }, [productModal, refresh])
     return (
         <div className={styles.mainContainer}>
             <div className={styles.headerContainer}>
@@ -29,7 +30,7 @@ export const ProductListing: FC<IProductListing> = ({ setProductModal,productMod
             </div>
             <div className={styles.productsContainer}>
                 {products.map((el, key) => (
-                    <ProductBarCard key={key} product={el} />
+                    <ProductBarCard key={key} product={el} refresh={refresh} setRefresh={setRefresh}/>
                 ))}
             </div>
         </div>

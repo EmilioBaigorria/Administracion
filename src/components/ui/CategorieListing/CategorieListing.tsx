@@ -7,36 +7,37 @@ import styles from "./CategorieListing.module.css"
 
 
 //const initialValues:ICategories[]=[{nombre:"Urbano",id:11},{nombre:"Hombre",id:12}]
-interface ICategorieListing{
-    setCategorieModal:Function
-    categorieModal:boolean
+interface ICategorieListing {
+    setCategorieModal: Function
+    categorieModal: boolean
 }
-export const CategorieListing:FC<ICategorieListing> = ({setCategorieModal,categorieModal}) => {
-    
-    const [categories,setCategories]=useState<ICategories[]>([])
-    const getCategories=async()=>{
-        const allCategories=await getAllCategories()
+export const CategorieListing: FC<ICategorieListing> = ({ setCategorieModal, categorieModal }) => {
+
+    const [categories, setCategories] = useState<ICategories[]>([])
+    const [refresh, setRefresh] = useState<boolean>(false)
+    const getCategories = async () => {
+        const allCategories = await getAllCategories()
         setCategories(allCategories)
     }
-    useEffect(()=>{
+    useEffect(() => {
         getCategories()
-    },[categorieModal])
+    }, [categorieModal, refresh])
 
-  return (
-    <div className={styles.mainContainer}>
+    return (
+        <div className={styles.mainContainer}>
             <div className={styles.headerContainer}>
                 <div className={styles.headerContainer_text}>
                     <p>Categorías</p>
                 </div>
                 <div>
-                    <Button text="Agregar Categoría" action={()=>setCategorieModal(true)} styleSet={false} />
+                    <Button text="Agregar categoría" action={() => setCategorieModal(true)} styleSet={false} />
                 </div>
             </div>
             <div className={styles.categoriesContainer}>
-                {categories.map((el)=>(
-                    <CategorieBarCard key={el.id} categorie={el} setCategorieModal={setCategorieModal}/>
+                {categories.map((el) => (
+                    <CategorieBarCard key={el.id} categorie={el} setCategorieModal={setCategorieModal} refresh={refresh} setRefresh={setRefresh} />
                 ))}
             </div>
         </div>
-  )
+    )
 }

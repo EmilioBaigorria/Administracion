@@ -7,8 +7,10 @@ import { Button } from '../Button/Button'
 import styles from "./ProductBarCard.module.css"
 interface ProductBarCard {
     product: IProduct
+    refresh: boolean
+    setRefresh: Function
 }
-export const ProductBarCard: FC<ProductBarCard> = ({ product }) => {
+export const ProductBarCard: FC<ProductBarCard> = ({ product, refresh, setRefresh }) => {
     const setActiveProduct = useProductStore(state => state.setActiveProduct)
     const handleSetActiveProduct = () => {
         setActiveProduct(product)
@@ -16,7 +18,7 @@ export const ProductBarCard: FC<ProductBarCard> = ({ product }) => {
     const handleDeleteProduct = async () => {
         Swal.fire({
             title: "¿Seguro?",
-            text: "Esta accion es irreversible",
+            text: "Esta acción es irreversible",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#d33",
@@ -29,14 +31,15 @@ export const ProductBarCard: FC<ProductBarCard> = ({ product }) => {
                 const response = await getProductById(product.id!.toString())
                 if (response.id) {
                     Swal.fire({
-                        title: "Ocurrio un error durante la eliminacion de un producto",
+                        title: "Ocurrió un error durante la eliminación de un producto",
                         icon: "error"
                     });
                 } else {
                     Swal.fire({
-                        title: "Producto Eliminada",
+                        title: "Producto eliminado",
                         icon: "success"
                     });
+                    setRefresh(!refresh)
                 }
 
             }
@@ -52,12 +55,12 @@ export const ProductBarCard: FC<ProductBarCard> = ({ product }) => {
                 </div>
                 <p><b>Stock:</b> {product.stock}</p>
                 <p><b>Precio de venta:</b> ${product.precio.toLocaleString("es-ar")}</p>
-                {product.descuento!.id !== 1 
-                ? <div>
-                    <p><b>Descuento:</b> {product.descuento!.descuento}%</p>
-                    <p><b>Precio con descuento:</b> ${(product.precio * (1 - product.descuento!.descuento / 100)).toLocaleString("es-ar")}</p> 
-                </div>
-                : ""}
+                {product.descuento!.id !== 1
+                    ? <div>
+                        <p><b>Descuento:</b> {product.descuento!.descuento}%</p>
+                        <p><b>Precio con descuento:</b> ${(product.precio * (1 - product.descuento!.descuento / 100)).toLocaleString("es-ar")}</p>
+                    </div>
+                    : ""}
             </div>
             <div className={styles.buttonsContainer}>
 
