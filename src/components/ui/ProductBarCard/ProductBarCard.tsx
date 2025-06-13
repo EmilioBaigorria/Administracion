@@ -15,7 +15,7 @@ export const ProductBarCard: FC<ProductBarCard> = ({ product, refresh, setRefres
     const setActiveProduct = useProductStore(state => state.setActiveProduct)
     const handleSetActiveProduct = () => {
         setActiveProduct(product)
-        setProductModal(true)
+        setProductModal(true) 
     }
     const handleDeleteProduct = async () => {
         Swal.fire({
