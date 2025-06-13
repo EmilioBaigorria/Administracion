@@ -9,11 +9,13 @@ interface ProductBarCard {
     product: IProduct
     refresh: boolean
     setRefresh: Function
+    setProductModal: Function
 }
-export const ProductBarCard: FC<ProductBarCard> = ({ product, refresh, setRefresh }) => {
+export const ProductBarCard: FC<ProductBarCard> = ({ product, refresh, setRefresh, setProductModal }) => {
     const setActiveProduct = useProductStore(state => state.setActiveProduct)
     const handleSetActiveProduct = () => {
         setActiveProduct(product)
+        setProductModal(true)
     }
     const handleDeleteProduct = async () => {
         Swal.fire({

@@ -4,8 +4,9 @@ import Swal from "sweetalert2"
 import { getAllCategories, getCategoriesById } from "../../../http/categorieRequest"
 import { getAllDiscounts, getDiscountById } from "../../../http/discountRequest"
 import { uploadImageToCloudinary } from "../../../http/imageRequest"
-import { createProduct } from "../../../http/productRequest"
+import { createProduct, updateProduct } from "../../../http/productRequest"
 import { getAllSizes, getSizeById } from "../../../http/sizeRequest"
+import { useProductStore } from "../../../store/productStore"
 import { ICategories } from "../../../types/ICategories"
 import { IDiscount } from "../../../types/IDiscount"
 import { IProduct } from "../../../types/IProduct"
@@ -13,7 +14,6 @@ import { ISize } from "../../../types/ISize"
 import { Button } from "../../ui/Button/Button"
 import styles from "./ModalCrearEditarProducto.tsx.module.css"
 const initialValues: IProduct = {
-    id: 0,
     nombre: "",
     stock: 0,
     precio: 0,
@@ -118,6 +118,9 @@ interface IModalCrearEditarProducto {
 }
 export const ModalCrearEditarProducto: FC<IModalCrearEditarProducto> = ({ isOpen, onClose }) => {
 
+    const activeProduct = useProductStore((state) => state.actireProduct)
+    const deleteProduct = useProductStore((state)=>state.deleteProduct)
+
     const [workingProduct, setWorkingProduct] = useState<IProduct>(initialValues)
 
     const [imageUrl, setImageUrl] = useState<string | null>(initialURL);
@@ -175,47 +178,86 @@ export const ModalCrearEditarProducto: FC<IModalCrearEditarProducto> = ({ isOpen
 
     const handleSave = async () => {
 
-        const productCategories = await Promise.all(
-            selectedCategories.map(async (el) => {
-                return await getCategoriesById(el.value);
-            })
-        );
+        if (activeProduct) {
+            const productCategories = await Promise.all(
+                selectedCategories.map(async (el) => {
+                    return await getCategoriesById(el.value);
+                })
+            );
 
-        const productSizes = await Promise.all(
-            selectedSizes.map(async (el) => {
-                return await getSizeById(el.value);
-            })
-        );
-        
-        const productDiscount=selectedDiscount?.value ? await getDiscountById(selectedDiscount.value): await getDiscountById("1")
-        
+            const productSizes = await Promise.all(
+                selectedSizes.map(async (el) => {
+                    return await getSizeById(el.value);
+                })
+            );
+
+            const productDiscount = selectedDiscount?.value ? await getDiscountById(selectedDiscount.value) : await getDiscountById("1")
 
 
-        const newProduct: IProduct = {
-            nombre: workingProduct.nombre,
-            descripcion: workingProduct.descripcion,
-            precio: Number(workingProduct.precio),
-            stock: Number(workingProduct.stock),
-            categorias: productCategories,
-            color: selectedColors?.value ? selectedColors?.value:"none",
-            marca:workingProduct.marca ,
-            imagen: imageUrl?imageUrl:"https://developer.valvesoftware.com/w/images/8/8b/Debugempty.png",
-            descuento:productDiscount,
-            talles: productSizes,
-        }
-        await createProduct(newProduct)
-        Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Producto creado",
-            showConfirmButton: false,
-            timer: 1500
+
+            const updatedProduct: IProduct = {
+                id: activeProduct.id,
+                nombre: workingProduct.nombre,
+                descripcion: workingProduct.descripcion,
+                precio: Number(workingProduct.precio),
+                stock: Number(workingProduct.stock),
+                categorias: productCategories,
+                color: selectedColors?.value ? selectedColors?.value : "none",
+                marca: workingProduct.marca,
+                imagen: imageUrl ? imageUrl : "https://developer.valvesoftware.com/w/images/8/8b/Debugempty.png",
+                descuento: productDiscount,
+                talles: productSizes,
+            }
+            await updateProduct(updatedProduct)
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Producto actualizado",
+                showConfirmButton: false,
+                timer: 1500
             });
-        handleClose()
+            handleClose()
+        } else {
+            const productCategories = await Promise.all(
+                selectedCategories.map(async (el) => {
+                    return await getCategoriesById(el.value);
+                })
+            );
 
+            const productSizes = await Promise.all(
+                selectedSizes.map(async (el) => {
+                    return await getSizeById(el.value);
+                })
+            );
+
+            const productDiscount = selectedDiscount?.value ? await getDiscountById(selectedDiscount.value) : await getDiscountById("1")
+
+            const newProduct: IProduct = {
+                nombre: workingProduct.nombre,
+                descripcion: workingProduct.descripcion,
+                precio: Number(workingProduct.precio),
+                stock: Number(workingProduct.stock),
+                categorias: productCategories,
+                color: selectedColors?.value ? selectedColors?.value : "none",
+                marca: workingProduct.marca,
+                imagen: imageUrl ? imageUrl : "https://developer.valvesoftware.com/w/images/8/8b/Debugempty.png",
+                descuento: productDiscount,
+                talles: productSizes,
+            }
+            await createProduct(newProduct)
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Producto creado",
+                showConfirmButton: false,
+                timer: 1500
+            });
+            handleClose()
+        }
     }
 
     const handleClose = () => {
+        deleteProduct()
         setWorkingProduct(initialValues)
         setImageUrl(initialURL)
         onClose()
@@ -228,12 +270,67 @@ export const ModalCrearEditarProducto: FC<IModalCrearEditarProducto> = ({ isOpen
 
         getDiscounts()
 
-    }, [])
+        if (activeProduct) {
+            let product: IProduct = {
+                nombre: activeProduct.nombre,
+                descripcion: activeProduct.descripcion,
+                precio: activeProduct.precio,
+                stock: activeProduct.stock,
+                categorias: activeProduct.categorias,
+                color: activeProduct.color,
+                marca: activeProduct.marca,
+                imagen: activeProduct.imagen,
+                descuento: activeProduct.descuento,
+                talles: activeProduct.talles
+            }
+
+            setWorkingProduct(product)
+            setImageUrl(product.imagen)
+
+            const discount = activeProduct.descuento
+            const sizes = activeProduct.talles
+            const categories = activeProduct.categorias
+            const colour = activeProduct.color
+
+            if (colour) {
+                const selectedColour: OptionType = {
+                    value: colour,
+                    label: colour
+                }
+                setselectedColors(selectedColour)
+            }
+
+            if (categories) {
+                const selectedCategories: OptionType[] = categories.map((el) => ({
+                    value: el.id ? el.id.toString() : "0",
+                    label: el.nombre
+                }))
+                setSelectedCategories(selectedCategories)
+            }
+
+            if (sizes) {
+                const selectedSizes: OptionType[] = sizes.map((el) => ({
+                    value: el.id ? el.id.toString() : "0",
+                    label: el.talle
+                }))
+                setSelectedSizes(selectedSizes)
+            }
+
+            if (discount) {
+                const selectedDiscount: OptionType = {
+                    value: discount.id ? discount.id.toString() : "0",
+                    label: `${discount.descuento}%-${new Date(discount.fechaInicio.toString()).toLocaleDateString()}-${new Date(discount.fechaCierre.toString()).toLocaleDateString()}`
+                }
+                setSelectedDiscount(selectedDiscount)
+            }
+        }
+
+    }, [activeProduct])
     return (
         <div className={styles.background} style={{ display: isOpen ? "" : "none" }}>
             <div className={styles.mainContainer}>
                 <div className={styles.header}>
-                    <p>{workingProduct.nombre == "" ? "Añadir producto" : "Editar producto"}</p>
+                    <p>{!workingProduct.id ? "Añadir producto" : "Editar producto"}</p>
                     <div className={styles.header_X} onClick={handleClose}>✖</div>
                 </div>
                 <div className={styles.mainContentContainer}>
@@ -312,7 +409,7 @@ export const ModalCrearEditarProducto: FC<IModalCrearEditarProducto> = ({ isOpen
                     </div>
                     <div className={styles.bottomButtonsContaner}>
                         <Button text="Cancelar" action={handleClose} styleSet={false} />
-                        <Button text="Crear" action={handleSave} styleSet={false} />
+                        <Button text={workingProduct.id ? "Editar" : "Crear"} action={handleSave} styleSet={false} />
                     </div>
                 </div>
             </div>

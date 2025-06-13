@@ -30,7 +30,7 @@ export const ProductListing: FC<IProductListing> = ({ setProductModal, productMo
             </div>
             <div className={styles.productsContainer}>
                 {products.map((el, key) => (
-                    <ProductBarCard key={key} product={el} refresh={refresh} setRefresh={setRefresh}/>
+                    <ProductBarCard key={key} product={el} setProductModal={setProductModal} refresh={refresh} setRefresh={setRefresh}/>
                 ))}
             </div>
         </div>
